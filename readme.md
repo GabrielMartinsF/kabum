@@ -3,7 +3,7 @@
 ```sh
 
 # Install Dependencies - PHP
-$ cd yt-api-com-php/ && composer update
+$ cd api && composer update
 
 ```
 

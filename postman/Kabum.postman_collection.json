@@ -1,0 +1,523 @@
+{
+	"info": {
+		"_postman_id": "8a5a2179-2ef0-4dcb-98ed-172ffe6613e5",
+		"name": "Kabum",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15353167"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "LOGIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\" : \"login\",\r\n    \"senha\" : \"senha\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/fetch",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"fetch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_usuario\" : 11,\r\n    \"senha\" : \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/17/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"17",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\" : \"login3\",\r\n    \"senha\" : \"senha\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "GET",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/client/fetch",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"client",
+								"fetch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/client/3/fetch",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"client",
+								"3",
+								"fetch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\" : \"Teste Pessoa\",\r\n    \"data_nascimento\" : \"2000-09-01\",\r\n    \"rg\" : \"201256411\",\r\n    \"telefone\" : \"(31) 999999999\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/client/1/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"client",
+								"1",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/client/2/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"client",
+								"2",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\" : \"login3\",\r\n    \"data_nascimento\" : \"2000-09-01\",\r\n    \"cpf\" : \"88535996001\",\r\n    \"rg\" : \"201256411\",\r\n    \"telefone\" : \"(31) 999999999\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/client/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"client",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Address",
+			"item": [
+				{
+					"name": "GET",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/address/fetch",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"address",
+								"fetch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/address/2/fetch",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"address",
+								"2",
+								"fetch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"logradouro\" : \"Rua aaa\", \r\n    \"logradouro_numero\" : \"113\", \r\n    \"logradouro_complemento\" :  \"Casa 1\", \r\n    \"logradouro_bairro\" : \"Brooklyn\", \r\n    \"logradouro_cep\" : \"32672-099\", \r\n    \"logradouro_cidade\" : \"Betim\", \r\n    \"logradouro_estado\" : \"MG\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/address/2/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"address",
+								"2",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/address/3/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"address",
+								"3",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"logradouro\" : \"Rua 1\", \r\n    \"logradouro_numero\" : \"110\", \r\n    \"logradouro_complemento\" :  \"Casa 3\", \r\n    \"logradouro_bairro\" : \"Brooklyn\", \r\n    \"logradouro_cep\" : \"32672-099\", \r\n    \"logradouro_cidade\" : \"Betim\", \r\n    \"logradouro_estado\" : \"MG\", \r\n    \"id_usuario\" : 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/address/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"address",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost/kabum/api"
+		}
+	]
+}

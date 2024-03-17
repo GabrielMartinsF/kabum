@@ -10,9 +10,17 @@ use App\Models\Address;
 
 class AddressService
 {
-    public static function create(array $data)
+    public static function create(array $data, mixed $authorization)
     {
         try {
+            if (isset($authorization['error'])) {
+                return ['unauthorized'=> $authorization['error']];
+            }
+
+            $userFromJWT = JWT::verify($authorization);
+
+            if (!$userFromJWT) return ['unauthorized'=> "Faça login para acessar."];
+
             $fields = Validator::validate([
                 'logradouro' => $data['logradouro'] ?? '',
                 'logradouro_numero' => $data['logradouro_numero'] ?? '',
@@ -41,9 +49,16 @@ class AddressService
         }
     }
 
-    public static function fetchAll()
+    public static function fetchAll(mixed $authorization)
     {
         try {
+            if (isset($authorization['error'])) {
+                return ['unauthorized'=> $authorization['error']];
+            }
+
+            $userFromJWT = JWT::verify($authorization);
+
+            if (!$userFromJWT) return ['unauthorized'=> "Faça login para acessar."];
 
             $address = Address::find();
 
@@ -60,9 +75,17 @@ class AddressService
         }
     }
 
-    public static function fetchOne(array $id_address)
+    public static function fetchOne(array $id_address, mixed $authorization)
     {
         try {
+            if (isset($authorization['error'])) {
+                return ['unauthorized'=> $authorization['error']];
+            }
+
+            $userFromJWT = JWT::verify($authorization);
+
+            if (!$userFromJWT) return ['unauthorized'=> "Faça login para acessar."];
+
             $address = Address::findOne($id_address[0]);
 
             if (!$address) return ['error'=> 'Endereço não encontrado.'];
@@ -78,9 +101,17 @@ class AddressService
         }
     }
 
-    public static function update($id_address, array $data)
+    public static function update($id_address, array $data, mixed $authorization)
     {
         try {
+            if (isset($authorization['error'])) {
+                return ['unauthorized'=> $authorization['error']];
+            }
+
+            $userFromJWT = JWT::verify($authorization);
+
+            if (!$userFromJWT) return ['unauthorized'=> "Faça login para acessar."];
+
             $fields = Validator::validate([
                 'logradouro' => $data['logradouro'] ?? '',
                 'logradouro_numero' => $data['logradouro_numero'] ?? '',
@@ -106,9 +137,17 @@ class AddressService
         }
     }
 
-    public static function delete(int|string $id)
+    public static function delete(int|string $id, mixed $authorization)
     {
         try {
+            if (isset($authorization['error'])) {
+                return ['unauthorized'=> $authorization['error']];
+            }
+
+            $userFromJWT = JWT::verify($authorization);
+
+            if (!$userFromJWT) return ['unauthorized'=> "Faça login para acessar."];
+
             $address = Address::delete($id);
 
             if (!$address) return ['error'=> 'Erro ao deletar endereço'];

@@ -10,9 +10,17 @@ use App\Models\Client;
 
 class ClientService
 {
-    public static function create(array $data)
+    public static function create(array $data, mixed $authorization)
     {
         try {
+            if (isset($authorization['error'])) {
+                return ['unauthorized'=> $authorization['error']];
+            }
+
+            $userFromJWT = JWT::verify($authorization);
+
+            if (!$userFromJWT) return ['unauthorized'=> "Faça login para acessar."];
+
             $fields = Validator::validate([
                 'nome' => $data['nome'] ?? '',
                 'data_nascimento' => $data['data_nascimento'] ?? '',
@@ -38,10 +46,17 @@ class ClientService
         }
     }
 
-    public static function fetchAll()
+    public static function fetchAll(mixed $authorization)
     {
         try {
+            if (isset($authorization['error'])) {
+                return ['unauthorized'=> $authorization['error']];
+            }
 
+            $userFromJWT = JWT::verify($authorization);
+
+            if (!$userFromJWT) return ['unauthorized'=> "Faça login para acessar."];
+            
             $client = Client::find();
 
             if (!$client) return ['error'=> 'Clientes não encontrados.'];
@@ -57,9 +72,17 @@ class ClientService
         }
     }
 
-    public static function fetchOne(array $id_cliente)
+    public static function fetchOne(array $id_cliente, mixed $authorization)
     {
         try {
+            if (isset($authorization['error'])) {
+                return ['unauthorized'=> $authorization['error']];
+            }
+
+            $userFromJWT = JWT::verify($authorization);
+
+            if (!$userFromJWT) return ['unauthorized'=> "Faça login para acessar."];
+            
             $client = Client::findOne($id_cliente[0]);
 
             if (!$client) return ['error'=> 'Cliente não encontrado.'];
@@ -75,9 +98,17 @@ class ClientService
         }
     }
 
-    public static function update($id_cliente, array $data)
+    public static function update($id_cliente, array $data, mixed $authorization)
     {
         try {
+            if (isset($authorization['error'])) {
+                return ['unauthorized'=> $authorization['error']];
+            }
+
+            $userFromJWT = JWT::verify($authorization);
+
+            if (!$userFromJWT) return ['unauthorized'=> "Faça login para acessar."];
+
             $fields = Validator::validate([
                 'nome' => $data['nome'] ?? '',
                 'data_nascimento' => $data['data_nascimento'] ?? '',
@@ -100,9 +131,17 @@ class ClientService
         }
     }
 
-    public static function delete(int|string $id)
+    public static function delete(int|string $id, mixed $authorization)
     {
         try {
+            if (isset($authorization['error'])) {
+                return ['unauthorized'=> $authorization['error']];
+            }
+
+            $userFromJWT = JWT::verify($authorization);
+
+            if (!$userFromJWT) return ['unauthorized'=> "Faça login para acessar."];
+
             $client = Client::delete($id);
 
             if (!$client) return ['error'=> 'Erro ao deletar cliente.'];

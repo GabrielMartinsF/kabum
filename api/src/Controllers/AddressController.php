@@ -12,7 +12,9 @@ class AddressController
     {
         $body = $request::body();
 
-        $addressService = AddressService::create($body);
+        $authorization = $request::authorization();
+
+        $addressService = AddressService::create($body, $authorization);
 
         if (isset($addressService['error'])) {
             return $response::json([
@@ -31,7 +33,9 @@ class AddressController
 
     public function fetch(Request $request, Response $response)
     {
-        $addressService = AddressService::fetchAll();
+        $authorization = $request::authorization();
+
+        $addressService = AddressService::fetchAll($authorization);
 
         if (isset($addressService['unauthorized'])) {
             return $response::json([
@@ -59,7 +63,9 @@ class AddressController
 
     public function fetchOne(Request $request, Response $response, array $id_cliente)
     { 
-        $clientService = AddressService::fetchOne($id_cliente);
+        $authorization = $request::authorization();
+
+        $clientService = AddressService::fetchOne($id_cliente, $authorization);
 
         if (isset($clientService['unauthorized'])) {
             return $response::json([
@@ -89,7 +95,9 @@ class AddressController
     {
         $body = $request::body();
 
-        $addressService = AddressService::update($id_cliente, $body);
+        $authorization = $request::authorization();
+
+        $addressService = AddressService::update($id_cliente, $body, $authorization);
 
         if (isset($addressService['unauthorized'])) {
             return $response::json([
@@ -117,7 +125,9 @@ class AddressController
 
     public function remove(Request $request, Response $response, array $id)
     {
-        $addressService = AddressService::delete($id[0]);
+        $authorization = $request::authorization();
+
+        $addressService = AddressService::delete($id[0], $authorization);
 
         if (isset($addressService['unauthorized'])) {
             return $response::json([

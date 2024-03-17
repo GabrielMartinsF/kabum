@@ -12,7 +12,9 @@ class ClientController
     {
         $body = $request::body();
 
-        $clientService = ClientService::create($body);
+        $authorization = $request::authorization();
+
+        $clientService = ClientService::create($body, $authorization);
 
         if (isset($clientService['error'])) {
             return $response::json([
@@ -31,7 +33,9 @@ class ClientController
 
     public function fetch(Request $request, Response $response)
     {   
-        $clientService = ClientService::fetchAll();
+        $authorization = $request::authorization();
+
+        $clientService = ClientService::fetchAll($authorization);
 
         if (isset($clientService['unauthorized'])) {
             return $response::json([
@@ -59,7 +63,9 @@ class ClientController
 
     public function fetchOne(Request $request, Response $response, array $id_cliente)
     { 
-        $clientService = ClientService::fetchOne($id_cliente);
+        $authorization = $request::authorization();
+
+        $clientService = ClientService::fetchOne($id_cliente, $authorization);
 
         if (isset($clientService['unauthorized'])) {
             return $response::json([
@@ -87,10 +93,11 @@ class ClientController
 
     public function update(Request $request, Response $response, array $id_cliente)
     {
+        $authorization = $request::authorization();
 
         $body = $request::body();
 
-        $clientService = ClientService::update($id_cliente[0], $body);
+        $clientService = ClientService::update($id_cliente[0], $body, $authorization);
 
         if (isset($clientService['unauthorized'])) {
             return $response::json([
@@ -118,8 +125,9 @@ class ClientController
 
     public function remove(Request $request, Response $response, array $id)
     {
+        $authorization = $request::authorization();
 
-        $clientService = ClientService::delete($id[0]);
+        $clientService = ClientService::delete($id[0], $authorization);
 
         if (isset($clientService['unauthorized'])) {
             return $response::json([

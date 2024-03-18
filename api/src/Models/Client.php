@@ -69,21 +69,20 @@ class Client extends Database
         $pdo = self::getConnection();
 
         $stmt = $pdo->prepare('
-            SELECT 
-                client.id_client, client.nome, client.data_nascimento, 
-                client.cpf, client.rg, client.telefone, address.logradouro, address.logradouro_numero, 
-                address.logradouro_complemento, address.logradouro_bairro, address.logradouro_cep, 
-                address.logradouro_cidade, address.logradouro_estado, address.id_usuario
-            FROM 
-                tb_cliente, tb_endereco
-            WHERE 
-                address.id_cliente = client.id_cliente
+        SELECT 		
+            client.id_cliente, client.nome, client.data_nascimento, 
+            client.cpf, client.rg, client.telefone, address.logradouro, address.logradouro_numero, 
+            address.logradouro_complemento, address.logradouro_bairro, address.logradouro_cep, 
+            address.logradouro_cidade, address.logradouro_estado, address.id_cliente
+        FROM tb_cliente as client
+            INNER JOIN tb_endereco address ON client.id_cliente = address.id_cliente
+        WHERE address.id_cliente = client.id_cliente
         ');
-        var_dump($stmt);
-        
+
         $stmt->execute();
         
-        $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
     }
 
     public static function update(int|string $id, array $data)

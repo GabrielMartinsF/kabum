@@ -117,7 +117,7 @@ class UserController
     {
         $authorization = $request::authorization();
 
-        $userService = UserService::delete($authorization, $id[0]);
+        $userService = UserService::delete($authorization);
 
         if (isset($userService['unauthorized'])) {
             return $response::json([

@@ -91,6 +91,36 @@ class ClientController
         return;
     }
 
+    public function fetchClientAddress(Request $request, Response $response, array $id_cliente)
+    { 
+        $authorization = $request::authorization();
+
+        $clientService = ClientService::fetchClientAdrress($authorization);
+
+        if (isset($clientService['unauthorized'])) {
+            return $response::json([
+                'error'   => true,
+                'success' => false,
+                'message' => $clientService['unauthorized']
+            ], 401);
+        }
+
+        if (isset($clientService['error'])) {
+            return $response::json([
+                'error'   => true,
+                'success' => false,
+                'message' => $clientService['error']
+            ], 400);
+        }
+
+        $response::json([
+            'error'   => false,
+            'success' => true,
+            'data'    => $clientService
+        ], 200);
+        return;
+    }
+
     public function update(Request $request, Response $response, array $id_cliente)
     {
         $authorization = $request::authorization();

@@ -64,6 +64,28 @@ class Client extends Database
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public static function findClientAddress()
+    {
+        $pdo = self::getConnection();
+
+        $stmt = $pdo->prepare('
+            SELECT 
+                client.id_client, client.nome, client.data_nascimento, 
+                client.cpf, client.rg, client.telefone, address.logradouro, address.logradouro_numero, 
+                address.logradouro_complemento, address.logradouro_bairro, address.logradouro_cep, 
+                address.logradouro_cidade, address.logradouro_estado, address.id_usuario
+            FROM 
+                tb_cliente, tb_endereco
+            WHERE 
+                address.id_cliente = client.id_cliente
+        ');
+        var_dump($stmt);
+        
+        $stmt->execute();
+        
+        $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public static function update(int|string $id, array $data)
     { 
         $pdo = self::getConnection();

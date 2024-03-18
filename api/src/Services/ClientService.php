@@ -70,6 +70,30 @@ class ClientService
         }
     }
 
+    public static function fetchClientAdrress(mixed $authorization)
+    {
+        try {
+            if (isset($authorization['error'])) {
+                return ['unauthorized'=> $authorization['error']];
+            }
+
+            $userFromJWT = JWT::verify($authorization);
+
+            if (!$userFromJWT) return ['unauthorized'=> "Faça login para acessar."];
+            
+            $client = Client::findClientAddress();
+
+            return $client;
+        } 
+        catch (PDOException $e) {
+            if ($e->errorInfo[0] === '08006') return ['error' => 'Erro de conexão.'];
+            return ['error' => $e->errorInfo[0]];
+        }
+        catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
     public static function fetchOne(array $id_cliente, mixed $authorization)
     {
         try {

@@ -2,113 +2,60 @@
 
 namespace App\Models;
 
-use App\Models\Database;
 use PDO;
+use App\Models\PersistenceDatas;
 
-class Address extends Database
+class Address 
 {
-    public static function save(array $data)
+    public static function save($endereco)
     {
-        $pdo = self::getConnection();
+        $address = PersistenceDatas::insert("tb_endereco", array(
+            "logradouro" => $endereco["logradouro"],
+            "logradouro_numero" => $endereco["logradouro_numero"],
+            "logradouro_complemento" => $endereco["logradouro_complemento"],
+            "logradouro_bairro" => $endereco["logradouro_bairro"],
+            "logradouro_cep" => $endereco["logradouro_cep"],
+            "logradouro_cidade" => $endereco["logradouro_cidade"],
+            "logradouro_estado" => $endereco["logradouro_estado"],
+            "id_cliente" => $endereco["id_cliente"]
+        ));
 
-        $stmt = $pdo->prepare("
-            INSERT 
-            INTO 
-                tb_endereco (logradouro, logradouro_numero, logradouro_complemento, 
-                logradouro_bairro, logradouro_cep, logradouro_cidade, logradouro_estado, id_cliente)
-            VALUES
-                (?, ?, ?, ?, ?, ?, ?, ?)
-        ");
-
-        $stmt->execute([
-            $data['logradouro'], 
-            $data['logradouro_numero'], 
-            $data['logradouro_complemento'], 
-            $data['logradouro_bairro'], 
-            $data['logradouro_cep'],
-            $data['logradouro_cidade'], 
-            $data['logradouro_estado'], 
-            $data['id_cliente']
-        ]);
-
-        return $pdo->lastInsertId() > 0 ? true : false;
+        return $address;
     }
 
     public static function find()
     {
-        $pdo = self::getConnection();
+        $users = PersistenceDatas::getAll("tb_endereco");
 
-        $stmt = $pdo->prepare('
-            SELECT 
-                *
-            FROM 
-                tb_endereco
-        ');
-
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $users;
     }
 
     public static function findOne(int|string $id_endereco)
     {
-        $pdo = self::getConnection();
+        $user = PersistenceDatas::getById("tb_endereco", $id_endereco, "id_endereco");
 
-        $stmt = $pdo->prepare('
-            SELECT 
-                *
-            FROM 
-                tb_endereco
-            WHERE 
-                id_endereco = ?
-        ');
-
-        $stmt->execute([$id_endereco]);
-
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $user;
     }
 
-    public static function update(int|string $id, array $data)
+    public static function update($id_endereco, $data)
     { 
-        $pdo = self::getConnection();
-        
-        $stmt = $pdo->prepare('
-            UPDATE
-                tb_endereco
-            SET 
-                logradouro = ?, 
-                logradouro_numero = ?, 
-                logradouro_complemento = ?, 
-                logradouro_bairro = ?, 
-                logradouro_cep = ?, 
-                logradouro_cidade = ?, 
-                logradouro_estado = ?
-            WHERE 
-                id_endereco = ?
-        ');
+        $stmt = PersistenceDatas::update("tb_endereco","id_endereco", $id_endereco[0], array(
+            "logradouro" => $data["logradouro"],
+            "logradouro_numero" => $data["logradouro_numero"],
+            "logradouro_complemento" => $data["logradouro_complemento"],
+            "logradouro_bairro" => $data["logradouro_bairro"],
+            "logradouro_cep" => $data["logradouro_cep"],
+            "logradouro_cidade" => $data["logradouro_cidade"],
+            "logradouro_estado" => $data["logradouro_estado"],
+        ));
 
-        $stmt->execute([$data['logradouro'], $data['logradouro_numero'],
-                        $data['logradouro_complemento'], $data['logradouro_bairro'], 
-                        $data['logradouro_cep'], $data['logradouro_cidade'], 
-                        $data['logradouro_estado'], $id]);
-
-        return $stmt->rowCount() > 0 ? true : false;
+        return $stmt;
     }
 
     public static function delete(int|string $id)
-    {
-        $pdo = self::getConnection();
+    {        
+        $stmt = PersistenceDatas::delete("tb_endereco", "id_endereco", $id);
 
-        $stmt = $pdo->prepare('
-            DELETE 
-            FROM 
-                tb_endereco
-            WHERE 
-                id_endereco = ?
-        ');
-
-        $stmt->execute([$id]);
-
-        return $stmt->rowCount() > 0 ? true : false;
+        return $stmt;
     }
 }

@@ -63,7 +63,7 @@ class Client extends Address
 
     public static function delete(int|string $id)
     {
-        $stmt = PersistenceDatas::delete("tb_cliente", $id);
+        $stmt = PersistenceDatas::delete("tb_cliente", "id_cliente", $id);
 
         return $stmt;
     }

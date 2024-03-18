@@ -21,23 +21,25 @@ class PersistenceDatas extends Database
         $sth->execute();
         
         $lastID = $connection->lastInsertId();
-
+    
         return !empty($lastID) ? $lastID : "";
     }
 
-    public static function getAll($table, $data = array()){
+    public static function getAll($table){
 
         $connection = self::getConnection();
 
         $query = "SELECT * FROM ".$table."";
 
+        var_dump($query);
+
         $sth = $connection->prepare($query);
 
         $sth->execute();
         
-        $lastID = $connection->lastInsertId();
-
-        return !empty($lastID) ? $lastID : "";
+        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+        
+        return !empty($result) ? $result : array();
     }
 
     public static function getById($table, $id, $param){
@@ -46,15 +48,17 @@ class PersistenceDatas extends Database
 
         $query = "SELECT * FROM ".$table." WHERE ".$param." = :id";
 
+        var_dump($query);
+
         $sth = $connection->prepare($query);
 
         $sth->bindValue(":id", $id, PDO::PARAM_INT);
 
         $sth->execute();
         
-        $lastID = $connection->lastInsertId();
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
 
-        return !empty($lastID) ? $lastID : "";
+        return !empty($result) ? $result : array();
     }
 
     public static function getAllUsers($table) {
@@ -175,7 +179,7 @@ class PersistenceDatas extends Database
         $query = "UPDATE ".$table." SET ".$params." WHERE ".$where." = ".$id."";
 
         var_dump($query);
-
+        
         $sth = $connection->prepare($query);
 
         $sth->execute();
@@ -183,11 +187,11 @@ class PersistenceDatas extends Database
         return $sth->rowCount() > 0 ? true : false;
     }
 
-    public static function delete($table, $id){
+    public static function delete($table, $where, $id){
 
         $connection = self::getConnection();
 
-        $query = "DELETE FROM ".$table." WHERE id_cliente = ".$id."";
+        $query = "DELETE FROM ".$table." WHERE ".$where." = ".$id."";
 
         $sth = $connection->prepare($query);
 

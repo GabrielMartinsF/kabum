@@ -14,7 +14,6 @@ Route::delete('/users/{id}/delete', 'UserController@remove');
 Route::post('/client/create',            'ClientController@store');
 Route::post('/client/login',             'ClientController@login');
 Route::get('/client/fetch',              'ClientController@fetch');
-Route::get('/client/fetchClientAddress', 'ClientController@fetchClientAddress');
 Route::get('/client/{id}/fetch',         'ClientController@fetchOne');
 Route::put('/client/{id}/update',        'ClientController@update');
 Route::delete('/client/{id}/delete',     'ClientController@remove');

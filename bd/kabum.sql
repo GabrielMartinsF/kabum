@@ -1,4 +1,3 @@
-
 CREATE DATABASE IF NOT EXISTS `kabum` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `kabum`;
 
@@ -20,7 +19,7 @@ CREATE TABLE `tb_endereco` (
   `logradouro_cep` varchar(80) DEFAULT NULL,
   `logradouro_cidade` varchar(80) DEFAULT NULL,
   `logradouro_estado` varchar(80) DEFAULT NULL,
-  `id_usuario` bigint(20) NOT NULL
+  `id_cliente` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `tb_usuario` (
@@ -35,7 +34,7 @@ ALTER TABLE `tb_cliente`
 
 ALTER TABLE `tb_endereco`
   ADD PRIMARY KEY (`id_endereco`),
-  ADD KEY `id_usuario` (`id_usuario`);
+  ADD KEY `id_cliente` (`id_cliente`);
 
 ALTER TABLE `tb_usuario`
   ADD PRIMARY KEY (`id_usuario`),
@@ -51,6 +50,5 @@ ALTER TABLE `tb_usuario`
   MODIFY `id_usuario` bigint(20) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `tb_endereco`
-  ADD CONSTRAINT `tb_endereco_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `tb_cliente` (`id_cliente`) ON DELETE CASCADE;
+  ADD CONSTRAINT `tb_endereco_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `tb_cliente` (`id_cliente`) ON DELETE CASCADE;
 COMMIT;
-

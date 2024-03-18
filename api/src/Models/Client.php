@@ -2,126 +2,69 @@
 
 namespace App\Models;
 
-use App\Models\Database;
 use PDO;
+use App\Models\PersistenceDatas;
 
-class Client extends Database
+class Client extends Address
 {
-    public static function save(array $data)
+    public static function save($client)
     {
-        $pdo = self::getConnection();
+        $id = PersistenceDatas::insert("tb_cliente", array(
+            "nome" => $client['nome'],
+            "data_nascimento" => $client["data_nascimento"],
+            "cpf" => $client["cpf"],
+            "rg" => $client["rg"],
+            "telefone" => $client["telefone"]      
+        ));
 
-        $stmt = $pdo->prepare("
-            INSERT 
-            INTO 
-                tb_cliente (nome, data_nascimento, cpf, rg, telefone)
-            VALUES
-                (?, ?, ?, ?, ?)
-        ");
+        if($client["endereco"] !== "") {
+            $endereco = $client["endereco"];
 
-        $stmt->execute([
-            $data['nome'], 
-            $data['data_nascimento'], 
-            $data['cpf'], 
-            $data['rg'], 
-            $data['telefone']
-        ]);
+            PersistenceDatas::insert("tb_endereco", array(
+                "logradouro" => $endereco["logradouro"],
+                "logradouro_numero" => $endereco["logradouro_numero"],
+                "logradouro_complemento" => $endereco["logradouro_complemento"],
+                "logradouro_bairro" => $endereco["logradouro_bairro"],
+                "logradouro_cep" => $endereco["logradouro_cep"],
+                "logradouro_cidade" => $endereco["logradouro_cidade"],
+                "logradouro_estado" => $endereco["logradouro_estado"],
+                "id_cliente" => $id 
+            ));
+        }
 
-        return $pdo->lastInsertId() > 0 ? true : false;
+        return $id;
     }
 
     public static function find()
     {
-        $pdo = self::getConnection();
+        $users = PersistenceDatas::getAllUsers("tb_cliente");
 
-        $stmt = $pdo->prepare('
-            SELECT 
-                *
-            FROM 
-                tb_cliente
-        ');
-
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $users;
     }
 
     public static function findOne(int|string $id_cliente)
     {
-        $pdo = self::getConnection();
+        $user = PersistenceDatas::getClientById("tb_cliente", $id_cliente);
 
-        $stmt = $pdo->prepare('
-            SELECT 
-                *
-            FROM 
-                tb_cliente
-            WHERE 
-                id_cliente = ?
-        ');
-
-        $stmt->execute([$id_cliente]);
-
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $user;
     }
 
-    public static function findClientAddress()
-    {
-        $pdo = self::getConnection();
-
-        $stmt = $pdo->prepare('
-            SELECT 		
-                client.id_cliente, client.nome, client.data_nascimento, 
-                client.cpf, client.rg, client.telefone, address.logradouro, address.logradouro_numero, 
-                address.logradouro_complemento, address.logradouro_bairro, address.logradouro_cep, 
-                address.logradouro_cidade, address.logradouro_estado, address.id_cliente
-            FROM tb_cliente as client
-                INNER JOIN tb_endereco address ON client.id_cliente = address.id_cliente
-            WHERE address.id_cliente = client.id_cliente
-        ');
-
-        $stmt->execute();
-        
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-    }
-
-    public static function update(int|string $id, array $data)
+    public static function update($id_cliente, $data)
     { 
-        $pdo = self::getConnection();
-        
-        $stmt = $pdo->prepare('
-            UPDATE
-                tb_cliente
-            SET 
-                nome = ?, 
-                data_nascimento = ?, 
-                rg = ?, 
-                telefone = ? 
-            WHERE 
-                id_cliente = ?
-        ');
+        $stmt = PersistenceDatas::update("tb_cliente","id_cliente", $id_cliente, array(
+            "nome" => $data['nome'],
+            "data_nascimento" => $data["data_nascimento"],
+            "rg" => $data["rg"],
+            "telefone" => $data["telefone"]      
+        ));
 
-        $stmt->execute([$data['nome'], $data['data_nascimento'],
-                        $data['rg'], 
-                        $data['telefone'], $id]);
-
-        return $stmt->rowCount() > 0 ? true : false;
+        return $stmt;
     }
 
     public static function delete(int|string $id)
     {
-        $pdo = self::getConnection();
+        $stmt = PersistenceDatas::delete("tb_cliente", $id);
 
-        $stmt = $pdo->prepare('
-            DELETE 
-            FROM 
-                tb_cliente
-            WHERE 
-                id_cliente = ?
-        ');
-
-        $stmt->execute([$id]);
-
-        return $stmt->rowCount() > 0 ? true : false;
+        return $stmt;
     }
 }

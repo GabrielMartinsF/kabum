@@ -59,8 +59,6 @@ class ClientService
             
             $client = Client::find();
 
-            if (!$client) return ['error'=> 'Clientes não encontrados.'];
-
             return $client;
         } 
         catch (PDOException $e) {

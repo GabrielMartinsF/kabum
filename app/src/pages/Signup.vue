@@ -1,13 +1,13 @@
 <template>
     <q-page>
-      <div class="home">
+      <div class="signup">
         
         <div class="row items-center card-item justify-center">
 
           <q-card class="my-card" bordered>
             <div class="q-pa-md col card-login column items-center justify-center">
               <div class="logo"></div>
-              <span class="madimi q-pb-md">Entrar</span>
+              <span class="madimi q-pb-md">Cadastro</span>
               <q-form
                 @submit="onSubmit"
                 @reset="onReset"
@@ -44,11 +44,10 @@
                 </q-input>
 
               </q-form>
-              <div class="singup row full-width">
-                <q-btn unelevated color="orange" label="Cadastro" class="full-width" to="/signup"/>
-              </div>
-              <div class="bottom-card">
-                <q-btn flat text-color="white" label="Login" class="full-width login" @click="access()" :loading="loading.login"/>
+              <div class="singup row full-width q-gutter-md">
+                <q-btn unelevated color="orange" label="Cadastrar" class="full-width" @click="singup()" :loading="loading.cadastro" />
+
+                <q-btn flat text-color="white" label="Cancelar" class="full-width" to="/"/>
               </div>
             </div>
           </q-card>
@@ -66,7 +65,7 @@ import UserService from "src/services/UserService";
 export default defineComponent({
   data: () => ({
     loading: {
-      login: false
+      cadastro: false
     },
     login: ref(''),
     password: ref(''),
@@ -74,19 +73,22 @@ export default defineComponent({
    
   }),
   methods: {
-    async access() {
-      this.loading.login = true;
+    async singup() {
+      this.loading.cadastro = true
       const payload = {
         login: this.login,
         senha: this.password
       }
-      let login = await UserService.login(payload)
-      this.loading.login = false
-      if (login.status == 200) {
+      let cadastro = await UserService.cadastro(payload)
+      this.loading.cadastro = false
+      if (cadastro.status == 200) {
         this.$router.push("painel")
       }
-      
     },
+    cancel() {
+      vueRouter.push({path: ''})
+    }
+    
   },
   mounted() {
     
@@ -94,7 +96,7 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.home{
+.signup{
   height: 100vh;
   background: linear-gradient(45deg, #ffd000, #f8c45c, #faa52f, #ff7b00);
   background-size: 200% 200%;

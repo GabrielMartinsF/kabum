@@ -9,6 +9,13 @@ class ClientService {
             headers: authHeader()
         })
     }
+
+
+    deletar(id) {
+        return axios.delete(apiUrl + `/client/${id}/delete`, {
+            headers: authHeader()
+        })
+    }
 }
 
 export default new ClientService();

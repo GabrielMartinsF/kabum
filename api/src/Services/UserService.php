@@ -7,6 +7,7 @@ use App\Utils\Validator;
 use Exception;
 use PDOException;
 use App\Models\User;
+use App\Entity\UserEntity;
 
 class UserService
 {
@@ -15,21 +16,25 @@ class UserService
         try {
             $fields = Validator::validate([
                 'login' => $data['login'] ?? '',
-                'senha' => $data['senha'] ?? '',
+                'senha' => $data['senha'] ?? ''
             ]);
 
             $fields['senha'] = password_hash($fields['senha'], PASSWORD_DEFAULT);
 
+            $rqst = new UserEntity();
+            $rqst->setLogin($fields['login']);
+            $rqst->setSenha($fields['senha']);
+
             $user = User::save($fields);
 
-            if (!$user) return ['error' => 'Não foi possível criar usuário.'];
+            if (!$user) return ['error' => 'Erro ao criar usuário.'];
 
-            return "User created successfully!";
+            return "usuário criado!";
 
         } 
         catch (PDOException $e) {
             if ($e->errorInfo[0] === '08006') return ['error' => 'Erro de conexão.'];
-            if ($e->errorInfo[0] === '23000') return ['error' => 'Usuário existente.'];
+            if ($e->errorInfo[0] === '23000') return ['error' => 'usuário já existe'];
             return ['error' => $e->errorInfo[0]];
         }
         catch (Exception $e) {
@@ -70,8 +75,8 @@ class UserService
             $userFromJWT = JWT::verify($authorization);
 
             if (!$userFromJWT) return ['unauthorized'=> "Faça login para acessar."];
-
-            $user = User::find($userFromJWT['id_usuario']);
+            
+            $user = User::find($userFromJWT['id']);
 
             if (!$user) return ['error'=> 'Erro na busca de usuários.'];
 
@@ -93,21 +98,24 @@ class UserService
                 return ['unauthorized'=> $authorization['error']];
             }
 
+            var_dump($authorization);
+
             $userFromJWT = JWT::verify($authorization);
 
             if (!$userFromJWT) return ['unauthorized'=> "Faça login para acessar."];
 
             $fields = Validator::validate([
+                'login' => $data['login'] ?? '',
                 'senha' => $data['senha'] ?? ''
             ]);
 
             $fields['senha'] = password_hash($fields['senha'], PASSWORD_DEFAULT);
-            
-            $user = User::update($userFromJWT['id_usuario'], $fields);
 
-            if (!$user) return ['error'=> 'Não foi possível atualizar Usuário.'];
+            $user = User::update($userFromJWT['id'], $fields);
 
-            return "Usuário atualizado!";
+            if (!$user) return ['error'=> 'Erro ao atualizar usuário.'];
+
+            return "usuário atualizado!";
         } 
         catch (PDOException $e) {
             if ($e->errorInfo[0] === '08006') return ['error' => 'Erro de conexão.'];
@@ -118,7 +126,7 @@ class UserService
         }
     }
 
-    public static function delete(mixed $authorization, int|string $id)
+    public static function delete(mixed $authorization)
     {
         try {
             if (isset($authorization['error'])) {
@@ -128,16 +136,16 @@ class UserService
             $userFromJWT = JWT::verify($authorization);
 
             if (!$userFromJWT) return ['unauthorized'=> "Faça login para acessar."];
-
-            $user = User::delete($id);
+            
+            $user = User::delete($userFromJWT['id']);
 
             if (!$user) return ['error'=> 'Erro ao deletar usuário.'];
 
-            return "Usuário deletado!";
+            return "Usuário deletado";
         } 
         catch (PDOException $e) {
             if ($e->errorInfo[0] === '08006') return ['error' => 'Erro de conexão.'];
-            return ['error' => $e->getMessage()];
+            return ['error' => $e->errorInfo[0]];
         }
         catch (Exception $e) {
             return ['error' => $e->getMessage()];

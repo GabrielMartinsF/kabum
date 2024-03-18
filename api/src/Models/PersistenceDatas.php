@@ -31,8 +31,6 @@ class PersistenceDatas extends Database
 
         $query = "SELECT * FROM ".$table."";
 
-        var_dump($query);
-
         $sth = $connection->prepare($query);
 
         $sth->execute();
@@ -48,17 +46,39 @@ class PersistenceDatas extends Database
 
         $query = "SELECT * FROM ".$table." WHERE ".$param." = :id";
 
-        var_dump($query);
-
         $sth = $connection->prepare($query);
 
         $sth->bindValue(":id", $id, PDO::PARAM_INT);
+        
+        $sth->execute();
+
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+    public static function getByLogin($table, $login){
+
+        $connection = self::getConnection();
+
+        $query = "SELECT * FROM ".$table." WHERE login = :login";
+
+        $sth = $connection->prepare($query);
+
+        $sth->bindValue(":login", $login["login"], PDO::PARAM_STR);
 
         $sth->execute();
         
-        $result = $sth->fetch(PDO::FETCH_ASSOC);
+        if ($sth->rowCount() < 1) return false;
 
-        return !empty($result) ? $result : array();
+        $user = $sth->fetch(PDO::FETCH_ASSOC);
+
+        if (!password_verify($login['senha'], $user['senha'])) return false;
+
+        return [
+            'id'   => $user['id_usuario'],
+            'name' => $user['login'],
+        ];;
     }
 
     public static function getAllUsers($table) {
@@ -177,8 +197,6 @@ class PersistenceDatas extends Database
         $params = implode(", ", $values);
 
         $query = "UPDATE ".$table." SET ".$params." WHERE ".$where." = ".$id."";
-
-        var_dump($query);
         
         $sth = $connection->prepare($query);
 

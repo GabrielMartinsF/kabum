@@ -29,7 +29,7 @@ class AddressService
                 'logradouro_cep' => $data['logradouro_cep'] ?? '',
                 'logradouro_cidade' => $data['logradouro_cidade'] ?? '',
                 'logradouro_estado' => $data['logradouro_estado'] ?? '',
-                'id_usuario' => $data['id_usuario'] ?? '',
+                'id_cliente' => $data['id_cliente'] ?? '',
             ]);
 
             $address = Address::save($fields);

@@ -15,7 +15,7 @@ class Address extends Database
             INSERT 
             INTO 
                 tb_endereco (logradouro, logradouro_numero, logradouro_complemento, 
-                logradouro_bairro, logradouro_cep, logradouro_cidade, logradouro_estado, id_usuario)
+                logradouro_bairro, logradouro_cep, logradouro_cidade, logradouro_estado, id_cliente)
             VALUES
                 (?, ?, ?, ?, ?, ?, ?, ?)
         ");
@@ -28,7 +28,7 @@ class Address extends Database
             $data['logradouro_cep'],
             $data['logradouro_cidade'], 
             $data['logradouro_estado'], 
-            $data['id_usuario']
+            $data['id_cliente']
         ]);
 
         return $pdo->lastInsertId() > 0 ? true : false;

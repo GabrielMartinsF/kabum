@@ -12,11 +12,8 @@
           <q-card class="my-card" square>
             <div class="q-pa-md q-pt-xl col card-login column items-center justify-center">
               <div class="logo"></div>
-              <div class="q-pa-md full-width row justify-center" v-if="Object.keys(clientes).length <= 0">
-                <q-btn outline color="orange" label="Novo Cliente" @click="openDialogClient()"/>
-              </div>
-              <div  class="full-width" v-if="Object.keys(clientes).length > 0">
-                <div class="q-pa-md full-width align-end">
+              <div  class="full-width">
+                <div class="q-pa-md full-width justify-center row">
                   <q-btn outline color="orange" label="Novo Cliente" @click="openDialogClient()"/>
                 </div>
                 <q-card class="background q-mb-lg q-pa-md" v-for="(clients, clientsIndex) in clientes" :key="clientsIndex">

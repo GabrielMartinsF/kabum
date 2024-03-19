@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-btn flat dense :icon="logged ? 'logout':'login'" />
+        <q-btn flat dense :icon="this.loggedIn ? 'login' : 'logout'" @click="doLogout()"/>
       </q-toolbar>
     </q-header>
 
@@ -14,8 +14,7 @@
 
 <script setup>
 import { ref } from 'vue';
-
-
+import { mapGetters, mapActions } from 'vuex';
 
 defineOptions({
 
@@ -24,17 +23,23 @@ defineOptions({
   data: () => ({
     logged: ref(false)
   }),
+  computed: {
+    ...mapGetters('auth', ["loggedIn"]),
+  },
   methods: {
-    login() {
-      if(this.logged) {
-        this.logged = !this.logged
+    ...mapActions('auth', ["logout"]),
+    async doLogout() {
+      if(this.loggedIn){
+        await this.logout()
+        this.$router.push("/")
+      } else {
+        this.$router.push("/")
       }
+      
     }
   },
   created() {
-    if(localStorage.getItem("token")){
-      this.logged = true
-    }    
+
   }
 })
 

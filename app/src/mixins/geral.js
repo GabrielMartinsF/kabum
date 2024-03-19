@@ -52,8 +52,7 @@ export default {
         
     },
     created () {
-      Loading.show()
-      this.fetchClientes()
+      
     },
     computed: {
         ...mapGetters('clients', ["clientes"])

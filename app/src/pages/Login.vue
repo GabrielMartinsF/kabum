@@ -9,8 +9,8 @@
               <div class="logo"></div>
               <span class="madimi q-pb-md">Entrar</span>
               <q-form
-                @submit="onSubmit"
-                @reset="onReset"
+                @submit="handleLogin"
+                ref="loginForm"
                 class="q-gutter-md full-width"
               >
                 <q-input
@@ -18,7 +18,7 @@
                   label-color="white"
                   filled
                   dark
-                  v-model="login"
+                  v-model="credencial.login"
                   label="Login"
                   lazy-rules
                   :rules="[ val => !!val || 'Insira seu login']"
@@ -26,7 +26,7 @@
 
                 <q-input 
                   class="full-width"
-                  v-model="password" 
+                  v-model="credencial.senha" 
                   filled 
                   label-color="white"
                   dark
@@ -48,7 +48,7 @@
                 <q-btn unelevated color="orange" label="Cadastro" class="full-width" to="/signup"/>
               </div>
               <div class="bottom-card">
-                <q-btn flat text-color="white" label="Login" class="full-width login" @click="access()" :loading="loading.login = !loading.login"/>
+                <q-btn flat text-color="white" label="Login" class="full-width login" @click="handleLogin" :loading="loading.login = !loading.login"/>
               </div>
             </div>
           </q-card>
@@ -61,15 +61,43 @@
 <script>
 import { defineComponent } from "vue";
 import { geral } from "src/mixins";
+import { mapActions } from "vuex";
+import Notifier from "src/services/NotifyService"
 
 export default defineComponent({
   mixins: [geral],
   name: "Login",
   data: () => ({
-   
+      credencial: {
+        login: '',
+        senha: ''
+      },
+      isPwd: true
   }),
   methods: {
-    
+    ...mapActions('auth', ["goLogin"]),
+
+    async handleLogin () {
+      const success = await this.$refs['loginForm'].validate()
+      if (!success)
+        return
+
+      await this.goLogin(this.credencial)
+        .then((response) => {
+            console.log("teste")
+            this.$router.push("/painel")
+        })
+        .catch((e) => {
+          console.error(e)
+          if (e.response && e.response.status === 401) {
+            Notifier.error("Usuário não autorizado!");
+          } else if (!e.response) {
+            Notifier.error("Ocorreu um erro sistêmico interno, favor entrar em contato!");
+          } else {
+            Notifier.error("Usuário ou Senha inválidos!");
+          }
+        });
+    },
   },
   mounted() {
     

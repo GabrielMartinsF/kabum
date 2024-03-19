@@ -16,7 +16,10 @@ PHP Version 8.0.30
 
 ```sh
 
-Script para criação em kabum\bd
+# Script para criação em -> kabum\bd
+
+# Acesse o arquivo em -> api/src/Models/Database.php e insira sua credenciais
+
 
 ```
 
@@ -49,3 +52,7 @@ $ yarn dev
 Collection em kabum\postman
 
 ```
+
+### Considerações:
+
+O projeto possui autenticação JWT, para ter acesso aos endpoints crie um usuario, faça login, pegue o token que retornará e insira nos cabeçalhos das requisições

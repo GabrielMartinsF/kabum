@@ -1,15 +1,18 @@
 <template>
     <q-page>
+      <EditAddress ref="editAddress"/>
       <div class="painel">
-        
         <div class="row items-center card-item justify-center">
 
           <q-card class="my-card" square>
             <div class="q-pa-md q-pt-xl col card-login column items-center justify-center">
               <div class="logo"></div>
+              <div class="q-pa-md full-width align-end" >
+                <q-btn outline color="orange" label="Novo Cliente" @click="openEditAddress()"/>
+              </div>
               <div  class="full-width">
                 <q-card class="background q-mb-lg q-pa-md" v-for="(clients, clientsIndex) in clientes" :key="clientsIndex">
-                  <div class="card-client row col-8">
+                  <div class="card-client row col-8 items-center">
                     <div class="col column items-center">
                       <span class="header">Nome</span>
                       <span class="info">
@@ -41,14 +44,35 @@
                       </span>
                     </div>
                     <div>
-                      <span class="col q-pa-md" @click="edit(clients.id_cliente)">
+                      <span class="col q-pa-md" @click="editClient(clients.id_cliente)">
                         <q-btn flat round color="orange" icon="edit" />
                       </span>
                     </div>
                     <div>
-                      <span class="col q-pa-md" @click="deletar(clients.id_cliente)">
+                      <span class="col q-pa-md" @click="deletarClient(clients.id_cliente)">
                         <q-btn flat round color="orange" icon="delete" />
                       </span>
+                    </div>
+                  </div>
+                  <div class="address">
+                    <div class="address-show row q-col-gutter-md">
+                      <div class="card-address q-ma-md q-pa-md col-2" v-for="(address, addressIndex) in clients.enderecos" :key="addressIndex">
+                        <div class="col items-start">
+                          <div class="row">
+                            <span style="color: aliceblue;">{{ address.logradouro }}</span>
+                          </div>
+                          <div class="row">
+                            <span style="color: aliceblue;">{{ `Numero: ${address.logradouro_numero}` }}</span> <span v-if="address.logradouro_complemento">{{ `, ${address.logradouro_complemento}` }}</span>
+                          </div>
+                          <div class="row">
+                            <span style="color: aliceblue;">{{ `CEP ${address.logradouro_cep} - ${address.logradouro_cidade}, ${address.logradouro_estado}` }}</span>
+                          </div>
+                          <div class="row">
+                            <q-btn class="full-width col" square flat color="white" icon="edit" @click="editAddress(clients.id_cliente)"/>
+                            <q-btn class="full-width col" square flat color="white" icon="delete" @click="deleteAddress(clients.id_cliente)"/>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </q-card>
@@ -66,10 +90,16 @@ import { date } from "quasar";
 import { defineComponent } from "vue";
 import { ref } from "vue";
 import ClientService from "src/services/ClientService";
+import EditAddress from "src/components/EditAddress.vue";
 
 export default defineComponent({
+  name: "Painel",
+  components: {
+    EditAddress
+  },
   data: () => ({
-    clientes: ref(null),            
+    clientes: ref(null),
+    expand: ref(true)            
   }),
   created() {
     this.buscar()
@@ -78,13 +108,16 @@ export default defineComponent({
 
   },
   methods: {
+    openEditAddress(){
+      this.$refs.editAddress.show()
+    },
     async buscar() {
       let client = await ClientService.fetch()
       if (client.status == 200) {
         this.clientes = client.data.data
       }
     },
-    async deletar(id) {
+    async deletarClient(id) {
       let del = await ClientService.deletar(id)
       if(del.status == 200){
         console.log(del)
@@ -125,14 +158,12 @@ export default defineComponent({
 }
 .card-login{
   background-color: #0060b1;
-  
   width: 100%;
   min-height: 100%;
 }
 .card-login span{
   font-weight: bold;
   color: #fff;
-  font-size: 36px;
 }
 .my-card{
   height: 80%;
@@ -164,6 +195,14 @@ export default defineComponent({
 .info{
   font-size: 24px !important;
 }
+
+
+/* endereços */
+.card-address {
+  background-color: #f17a28;
+  font-size: 15px;
+}
+
 
 @keyframes colors {
   0%{

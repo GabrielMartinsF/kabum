@@ -10,12 +10,17 @@ class ClientService {
         })
     }
 
+    adicionar(payload) {
+        return axios.post(apiUrl + "client/create", payload, {
+            headers: authHeader()
+        })
+    }
 
     deletar(id) {
         return axios.delete(apiUrl + `/client/${id}/delete`, {
             headers: authHeader()
         })
-    }
+    }    
 }
 
 export default new ClientService();

@@ -9,8 +9,7 @@
               <div class="logo"></div>
               <span class="madimi q-pb-md">Cadastro</span>
               <q-form
-                @submit="onSubmit"
-                @reset="onReset"
+                @submit="signup()"
                 class="q-gutter-md full-width"
               >
                 <q-input
@@ -63,9 +62,10 @@ import { ref } from "vue";
 import UserService from "src/services/UserService";
 
 export default defineComponent({
+  name: "Singup",
   data: () => ({
     loading: {
-      cadastro: false
+      cadastro: ref(false)
     },
     login: ref(''),
     password: ref(''),
@@ -74,20 +74,23 @@ export default defineComponent({
   }),
   methods: {
     async singup() {
-      this.loading.cadastro = true
+      this.loading.cadastro = !this.loading.cadastro
       const payload = {
         login: this.login,
         senha: this.password
       }
-      let cadastro = await UserService.cadastro(payload)
-      this.loading.cadastro = false
-      if (cadastro.status == 200) {
-        this.$router.push("painel")
+
+      try {
+        await UserService.cadastro(payload)
+        this.loading.cadastro = !this.loading.cadastro
+        router.push({ name: 'profile'})
       }
+      catch(err) {
+        console.log(err)
+        this.loading.cadastro = false
+      }
+      
     },
-    cancel() {
-      vueRouter.push({path: ''})
-    }
     
   },
   mounted() {

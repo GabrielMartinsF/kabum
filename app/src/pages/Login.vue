@@ -48,7 +48,7 @@
                 <q-btn unelevated color="orange" label="Cadastro" class="full-width" to="/signup"/>
               </div>
               <div class="bottom-card">
-                <q-btn flat text-color="white" label="Login" class="full-width login" @click="access()" :loading="loading.login"/>
+                <q-btn flat text-color="white" label="Login" class="full-width login" @click="access()" :loading="loading.login = !loading.login"/>
               </div>
             </div>
           </q-card>
@@ -64,6 +64,7 @@ import { ref } from "vue";
 import UserService from "src/services/UserService";
 
 export default defineComponent({
+  name: "Login",
   data: () => ({
     loading: {
       login: false
@@ -81,9 +82,23 @@ export default defineComponent({
         senha: this.password
       }
       let login = await UserService.login(payload)
-      this.loading.login = false
+
+      
+
+      try {
+        const login = await UserService.login(payload)
+        this.loading.login = !this.loading.login
+        localStorage.setItem("token", login.data.jwt)
+        router.push({ name: 'painel'})
+      }
+      catch(err) {
+        console.log(err)
+        this.loading.login = this.loading.login
+      }
+
       if (login.status == 200) {
-        this.$router.push("painel")
+
+        this.$router.push({name: "painel"})
       }
       
     },

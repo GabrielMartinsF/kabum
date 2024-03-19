@@ -13,7 +13,7 @@
                     <q-form
                         @submit="addClient(payloadAddress)"
                         class="row full-width"
-                        ref="clientForm"
+                        ref="addressForm"
                     >
                         <div class="row full-width">
                             <div class="row full-width">
@@ -67,7 +67,7 @@
 
             <q-card-actions align="center">
                 <q-btn flat label="Cancelar" color="primary" v-close-popup />
-                <q-btn flat label="Confirmar" color="primary" @click="addAddress(payloadAddress)" :loading="loading.confirmar" />
+                <q-btn flat label="Confirmar" color="primary" @click="addAddress()" :loading="loading.confirmar" />
             </q-card-actions>
         </q-card>
     </q-dialog>
@@ -77,7 +77,6 @@
 import { geral } from 'src/mixins';
 import { ref } from 'vue';
 import { loadCep } from 'src/utils';
-import NotifyService from 'src/services/NotifyService';
 import AddressService from 'src/services/AddressService';
   
 export default {
@@ -85,24 +84,13 @@ export default {
     mixins: [geral],
     data () {
       return {
-        clienteAddress: ref(''),
-        payloadAddress: {
-            logradouro : '', 
-            logradouro_numero : '', 
-            logradouro_complemento : '', 
-            logradouro_bairro : '', 
-            logradouro_cep : '', 
-            logradouro_cidade : '', 
-            logradouro_estado : '', 
-            id_cliente : ''
-        }
+        
       }
     },
     methods: {
         show (value) {
             if(value) {
                 this.payloadAddress.id_cliente = value.id_cliente
-                console.log(this.clienteAddress)
             }
             
             this.$refs.addressDialog.show();
@@ -120,7 +108,7 @@ export default {
                     this.payloadAddress.logradouro = result.logradouro
                 }
             } catch(e) {
-                console.log("loadCep", e, e.response)
+                Notifier.error(e.response)
             }
         },
     }

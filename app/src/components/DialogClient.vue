@@ -110,9 +110,7 @@
   <script>
 import { geral } from 'src/mixins';
 import { loadCep } from 'src/utils';
-import NotifyService from 'src/services/NotifyService';
-import ClientService from "src/services/ClientService";
-  
+
 export default {
     name: 'DialogClient',
     mixins: [geral],
@@ -129,23 +127,6 @@ export default {
             this.$refs.clientDialog.hide();
         },
 
-        async addClient(){
-            this.loading.confirmar = true
-            let success = await this.$refs['clientForm'].validate()
-            if(success){
-                try {
-                    ClientService.adicionar(this.payload)
-                    this.loading.confirmar = false
-                    await ClientService.fetch()
-                    this.hide()
-                } catch (e) {
-                    NotifyService.error("erro aqui")
-                    console.log('addClient', e, e.response)
-                    this.loading.confirmar = false
-                }
-            }
-        },
-
         async loadCepHandler(value) {
             try{
                 const result = await loadCep(value)
@@ -156,7 +137,7 @@ export default {
                     this.payload.endereco.logradouro = result.logradouro
                 }
             } catch(e) {
-                console.log("loadCep", e, e.response)
+                Notifier.error(e.response)
             }
         },
     }

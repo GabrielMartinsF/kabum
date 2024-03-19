@@ -5,7 +5,7 @@
     >
         <q-card class="full-width">
             <q-card-section class="row items-center">
-                <div class="text-h6">Cadastro Cliente</div>
+                <div class="text-h6">Editar Cliente</div>
             </q-card-section>
 
             <q-card-section class="q-pt-none full-width">
@@ -47,52 +47,7 @@
                                     filled v-model="payload.telefone" label="Telefone *"  mask="(##) #####-####"
                                     lazy-rules :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
                                 />
-                            </div>
-                        </div>
-                        <div class="row full-width">
-                            <div class="row full-width">
-                                <q-input
-                                    class="col q-pr-sm p-pl-sm q-pb-md q-pt-md full-width" @change="loadCepHandler(payload.endereco.logradouro_cep)"
-                                    filled v-model="payload.endereco.logradouro_cep" label="CEP *" mask="#####-###"
-                                    lazy-rules :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
-                                />
-
-                                <q-input
-                                    class="col q-pr-sm p-pl-sm q-pb-md q-pt-md full-width"
-                                    filled v-model="payload.endereco.logradouro" label="Logradouro *" 
-                                    lazy-rules :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
-                                />
-
-                                <q-input
-                                    class="col q-pr-sm p-pl-sm q-pb-md q-pt-md full-width"
-                                    filled v-model="payload.endereco.logradouro_numero" label="Numero *" 
-                                    lazy-rules :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
-                                />
-                            </div> 
-                            <div class="row full-width">
-                                <q-input
-                                    class="col q-pr-sm p-pl-sm q-pb-md q-pt-md full-width"
-                                    filled v-model="payload.endereco.logradouro_complemento" label="Complemento"
-                                />
-
-                                <q-input
-                                    class="col q-pr-sm p-pl-sm q-pb-md q-pt-md full-width"
-                                    filled v-model="payload.endereco.logradouro_bairro" label="Bairro *" 
-                                    lazy-rules :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
-                                />
-
-                                <q-input
-                                    class="col q-pr-sm p-pl-sm q-pb-md q-pt-md full-width"
-                                    filled v-model="payload.endereco.logradouro_cidade" label="Cidade *" 
-                                    lazy-rules :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
-                                />     
-
-                                <q-input
-                                    class="col q-pr-sm p-pl-sm q-pb-md q-pt-md full-width"
-                                    filled v-model="payload.endereco.logradouro_estado" label="Estado *" 
-                                    lazy-rules :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
-                                />
-                            </div>
+                            </div>                        
                         </div>
                     </q-form>
 
@@ -101,7 +56,7 @@
 
             <q-card-actions align="center">
                 <q-btn flat label="Cancelar" color="primary" v-close-popup />
-                <q-btn flat label="Confirmar" color="primary" @click="addClient()" :loading="loading.confirmar" />
+                <q-btn flat label="Confirmar" color="primary" @click="editClient(id)" :loading="loading.confirmar" />
             </q-card-actions>
         </q-card>
     </q-dialog>
@@ -110,19 +65,21 @@
   <script>
 import { geral } from 'src/mixins';
 import { loadCep } from 'src/utils';
-import NotifyService from 'src/services/NotifyService';
-import ClientService from "src/services/ClientService";
   
 export default {
     name: 'DialogClient',
     mixins: [geral],
     data () {
       return {
-            
+            id: null
       }
     },
     methods: {
-        show () {
+        show (data) {
+            if(data) {
+                this.id = data.id_cliente
+                this.payload = data
+            }
             this.$refs.addressEditDialog.show();
         },
         hide () {

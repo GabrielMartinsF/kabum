@@ -1,7 +1,11 @@
 <template>
     <q-page>
+
       <DialogClient ref="dialogClient"/>
+      <DialogEditClient ref="dialogEditClient"/>
       <DialogAddress ref="dialogAddress"/>
+      <DialogEditAddress ref="dialogEditAddress"/>
+
       <div class="painel">
         <div class="row items-center card-item justify-center">
 
@@ -45,7 +49,7 @@
                       </span>
                     </div>
                     <div>
-                      <span class="col q-pa-md" @click="editClient(clients.id_cliente)">
+                      <span class="col q-pa-md" @click="openDialogEditClient(clients)">
                         <q-btn flat round color="orange" icon="edit" />
                       </span>
                     </div>
@@ -69,8 +73,8 @@
                             <span style="color: aliceblue;">{{ `CEP ${address.logradouro_cep} - ${address.logradouro_cidade}, ${address.logradouro_estado}` }}</span>
                           </div>
                           <div class="row">
-                            <q-btn class="full-width col" square flat color="white" icon="edit" @click="editAddress(address.id_endereco)"/>
-                            <q-btn class="full-width col" square flat color="white" icon="delete" @click="deleteAddress(address.id_endereco)"/>
+                            <q-btn class="full-width col" square flat color="white" icon="edit" @click="openDialogEditAddress(address)"/>
+                            <q-btn class="full-width col" square flat color="white" icon="delete" @click="deleteAddress(address.id_endereco)" v-if="clients.enderecos.length > 1"/>
                           </div>
                         </div>
                       </div>
@@ -93,6 +97,8 @@
 import { defineComponent } from "vue";
 import DialogClient from "src/components/DialogClient.vue";
 import DialogAddress from "src/components/DialogAddress.vue";
+import DialogEditAddress from "src/components/DialogEditAddress.vue";
+import DialogEditClient from "src/components/DialogEditClient.vue";
 import { geral } from "src/mixins";
 
 export default defineComponent({
@@ -100,7 +106,9 @@ export default defineComponent({
   name: "Painel",
   components: {
     DialogClient,
-    DialogAddress
+    DialogAddress,
+    DialogEditAddress,
+    DialogEditClient
   },
   data: () => ({
              

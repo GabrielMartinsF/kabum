@@ -16,8 +16,8 @@ class ClientService {
         })
     }
 
-    editar(payload, id) {
-        return axios.put(apiUrl + `client/${id}/update`, payload, {
+    editar(payload) {
+        return axios.put(apiUrl + `client/${payload.id_cliente}/update`, payload, {
             headers: authHeader()
         })
     }

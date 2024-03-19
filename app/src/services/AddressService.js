@@ -16,8 +16,9 @@ class AdressService {
         })
     }
 
-    editar(payload, id) {
-        return axios.put(apiUrl + `address/${id}/update`, payload, {
+    editar(payload) {
+        console.log(payload)
+        return axios.put(apiUrl + `address/${payload.id_endereco}/update`, payload, {
             headers: authHeader()
         })
     }

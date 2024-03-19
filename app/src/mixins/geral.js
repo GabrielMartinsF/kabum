@@ -1,5 +1,5 @@
 import { mapActions, mapGetters, mapMutations } from 'vuex';
-import Notifier from '../services/NotifyService'
+import Notifier from 'src/services/NotifyService'
 import { date, Loading } from 'quasar'
 import _ from 'lodash'
 import { ref } from "vue";
@@ -35,6 +35,16 @@ export default {
                     logradouro_cidade: '',
                     logradouro_estado: '',
                 }
+            },
+            payloadAddress: {
+              logradouro : '', 
+              logradouro_numero : '', 
+              logradouro_complemento : '', 
+              logradouro_bairro : '', 
+              logradouro_cep : '', 
+              logradouro_cidade : '', 
+              logradouro_estado : '', 
+              id_cliente : ''
             }
         }
     },
@@ -55,6 +65,12 @@ export default {
           },
           openDialogAddress(client){
               this.$refs.dialogAddress.show(client)
+          },
+          openDialogEditAddress(data){
+            this.$refs.dialogEditAddress.show(data)
+          },
+          openDialogEditClient(data){
+            this.$refs.dialogEditClient.show(data)
           },
 
           /* validate and formate */
@@ -91,10 +107,10 @@ export default {
             try {
               await UserService.cadastro(payload)
               this.loading.cadastro = false
-              router.push({ name: 'profile'})
+              router.push({ name: 'login'})
             }
             catch(err) {
-              console.log(err)
+              Notifier.error(err.response.data.message)
               this.loading.cadastro = false
             }
             
@@ -114,65 +130,97 @@ export default {
               router.push({ name: 'painel'})
             }
             catch(err) {
-              console.log(err)
+              Notifier.error(err.response.data.message)
               this.loading.login = false
-            }
-      
-            if (login.status == 200) {
-              this.$route.push({name: "painel"})
-            }
-            
+            }            
           },
       
 
           /* Client */
           async addClient(){
-            this.loading.confirmar = true
-            let success = await this.$refs['clientForm'].validate()
+              let success = await this.$refs['clientForm'].validate()
+              if(success){
+                  try {
+                      this.loading.confirmar = true
+                      await this.ClientService.adicionar(this.payload)
+                      this.loading.confirmar = false
+                      await ClientService.fetch()
+                      this.hide()
+                  } catch (e) {
+                      Notifier.error(e.response.data.message)
+                      this.loading.confirmar = false
+                  }
+              }
+          },
+
+          async editClient(){
+              let success = await this.$refs['clientForm'].validate()
+              if(success){
+                  try {
+                      this.loading.confirmar = true
+                      await ClientService.editar(this.payload)
+                      this.loading.confirmar = false
+                      await ClientService.fetch()
+                      this.hide()
+                  } catch (e) {
+                      Notifier.error(e.response.data.message)
+                      this.loading.confirmar = false
+                  }
+              }
+          },
+
+          async deletarClient(id) {
+            try {
+              await ClientService.deletar(id)
+              this.fetchClientes()
+              Notifier.success("Cliente deletado!")
+            } catch (e) {
+              Notifier.error(e.response.data.message)
+            }                
+          },
+
+
+          /* Address */
+          async addAddress(){
+            let success = await this.$refs['addressForm'].validate()
             if(success){
                 try {
-                    ClientService.adicionar(this.payload)
+                    this.loading.confirmar = true
+                    await AddressService.adicionar(this.payloadAddress)
+                    this.fetchClientes()
                     this.loading.confirmar = false
-                    await this.fetchClientes()
                     this.hide()
                 } catch (e) {
-                    NotifyService.error("erro aqui")
-                    console.log('addClient', e, e.response)
+                    Notifier.error(e.response.data.message)
                     this.loading.confirmar = false
                 }
             }
           },
 
-          async deletarClient(id) {
-            let del = await ClientService.deletar(id)
-            if(del.status == 200){
-                this.fetchClientes()
-            }
-          },
-
-
-          /* Address */
-          async addAddress(payload){
-              this.loading.confirmar = true
+          async editAddress(){
               let success = await this.$refs['clientForm'].validate()
               if(success){
                   try {
-                      AddressService.adicionar(payload)
-                      this.fetchClientes()
+                      this.loading.confirmar = true
+                      await AddressService.editar(this.payloadAddress)
                       this.loading.confirmar = false
+                      await ClientService.fetch()
+                      this.hide()
                   } catch (e) {
-                      NotifyService.error("erro aqui")
-                      console.log('addClient', e, e.response)
+                      Notifier.error(e.response.data.message)
                       this.loading.confirmar = false
                   }
               }
           },
 
           async deleteAddress(id) {
-              let del = await AddressService.deletar(id)
-              if(del.status == 200){
-                  this.fetchClientes()
-              }
+            try {
+              await AddressService.deletar(id)
+              this.fetchClientes()
+              Notifier.success("endereço deletado!")
+            } catch (e) {
+              Notifier.error(e.response.data.message)
+            }  
           },
     },
     watch: {

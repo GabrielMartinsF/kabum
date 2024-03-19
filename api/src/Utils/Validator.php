@@ -10,12 +10,12 @@ class Validator
             if (is_array($value)) {
                 foreach ($value as $index => $nvalue) {
                     if (empty(trim($nvalue)) && $index !== "logradouro_complemento") {
-                        throw new \Exception("The field ($index) is required.");
+                        throw new \Exception("O campo $index é obrigatório.");
                     }
                 }
             } else {
-                if (empty(trim($value)) && $field != "endereco") {
-                    throw new \Exception("The field ($field) is required.");
+                if (empty(trim($value)) && $field != "endereco" && $field !== "logradouro_complemento") {
+                    throw new \Exception("O campo $field é obrigatório.");
                 }
             }
             

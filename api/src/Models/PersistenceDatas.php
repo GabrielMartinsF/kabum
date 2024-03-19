@@ -93,6 +93,7 @@ class PersistenceDatas extends Database
             FROM tb_cliente as client
                 INNER JOIN tb_endereco address ON client.id_cliente = address.id_cliente
             WHERE address.id_cliente = client.id_cliente
+            ORDER BY client.id_cliente
         ');
 
         $stmt->execute();

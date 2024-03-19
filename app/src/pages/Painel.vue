@@ -23,25 +23,25 @@
                     <div class="col column items-center">
                       <span class="header">CPF</span>
                       <span class="info">
-                        {{ formatDocument(clients.cpf) }}
+                        {{ clients.cpf }}
                       </span>
                     </div>
                     <div class="col column items-center">
                       <span class="header">RG</span>
                       <span class="info">
-                        {{ formatRg(clients.rg) }}
+                        {{ clients.rg }}
                       </span>
                     </div>
                     <div class="col column items-center">
                       <span class="header">Data de nascimento</span>
                       <span class="info">
-                        {{ formatDate(clients.data_nascimento) }}
+                        {{ clients.data_nascimento }}
                       </span>
                     </div>
                     <div class="col column items-center">
                       <span class="header">Telefone</span>
                       <span class="info">
-                        {{ formatPhone(clients.telefone) }}
+                        {{ clients.telefone }}
                       </span>
                     </div>
                     <div>
@@ -106,7 +106,7 @@ export default defineComponent({
              
   }),
   created() {
-    this.buscarClient()
+    this.fetchClientes()
   },
   computed: {
 

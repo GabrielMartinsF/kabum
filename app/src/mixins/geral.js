@@ -1,8 +1,8 @@
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import Notifier from '../services/NotifyService'
 import { date, Loading } from 'quasar'
 import _ from 'lodash'
 import { ref } from "vue";
-import { loadCep } from 'src/utils';
 import { documentValidator } from 'src/utils/validators/document';
 import UserService from "src/services/UserService";
 import ClientService from "src/services/ClientService";
@@ -16,7 +16,6 @@ export default {
                 confirmar: ref(false),
                 login: ref(false)
             },
-            clientes: ref(null),
             login: ref(''),
             password: ref(''),
             isPwd: ref(true),
@@ -43,13 +42,14 @@ export default {
         
     },
     created () {
-        
+      Loading.show()
+      this.fetchClientes()
     },
     computed: {
-        
+        ...mapGetters('clients', ["clientes"])
     },
     methods: {
-
+          ...mapActions('clients', ["fetchClientes"]),
           openDialogClient(){
               this.$refs.dialogClient.show()
           },
@@ -63,40 +63,22 @@ export default {
             return documentValidator(value)
           },
           validaDate(value){
-          const partesData = value.split('/')
-          const data = {
-              dia: partesData[0],
-              mes: partesData[1],
-              ano: partesData[2]
-          }
+            const partesData = value.split('/')
+            const data = {
+                dia: partesData[0],
+                mes: partesData[1],
+                ano: partesData[2]
+            }
 
-          const dia = parseInt(data.dia)
-          const mes = parseInt(data.mes)
+            const dia = parseInt(data.dia)
+            const mes = parseInt(data.mes)
 
-          if (mes < 1 || mes > 12 || dia < 1 || dia > 31) {
-              return false
-          }
+            if (mes < 1 || mes > 12 || dia < 1 || dia > 31) {
+                return false
+            }
 
-          return true
+            return true
           },
-          formatDate(data) {
-            const extracted = date.extractDate(data, 'YYYY-MM-DD')
-            return date.formatDate(extracted, "DD/MM/YYYY")
-          },
-          formatDocument(data) {
-            return data.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-          },
-          formatRg(data) {
-            data=data.replace(/\D/g,"");
-            data=data.replace(/(\d{2})(\d{3})(\d{3})(\d{1})$/,"$1.$2.$3-$4");
-            return data;
-          },
-          formatPhone(data) {
-            data = data.replace(/\D/g,'')
-            data = data.replace(/(\d{2})(\d)/,"($1) $2")
-            return data = data.replace(/(\d)(\d{4})$/,"$1-$2")
-          },
-
 
           /* user */
           async singup() {
@@ -137,7 +119,6 @@ export default {
             }
       
             if (login.status == 200) {
-      
               this.$route.push({name: "painel"})
             }
             
@@ -145,16 +126,27 @@ export default {
       
 
           /* Client */
-          async buscarClient() {
-            let client = await ClientService.fetch()
-            if (client.status == 200) {
-                this.clientes = client.data.data
+          async addClient(){
+            this.loading.confirmar = true
+            let success = await this.$refs['clientForm'].validate()
+            if(success){
+                try {
+                    ClientService.adicionar(this.payload)
+                    this.loading.confirmar = false
+                    await this.fetchClientes()
+                    this.hide()
+                } catch (e) {
+                    NotifyService.error("erro aqui")
+                    console.log('addClient', e, e.response)
+                    this.loading.confirmar = false
+                }
             }
           },
+
           async deletarClient(id) {
             let del = await ClientService.deletar(id)
             if(del.status == 200){
-                this.buscarClient()
+                this.fetchClientes()
             }
           },
 
@@ -166,7 +158,7 @@ export default {
               if(success){
                   try {
                       AddressService.adicionar(payload)
-                      this.buscarClient()
+                      this.fetchClientes()
                       this.loading.confirmar = false
                   } catch (e) {
                       NotifyService.error("erro aqui")
@@ -179,7 +171,7 @@ export default {
           async deleteAddress(id) {
               let del = await AddressService.deletar(id)
               if(del.status == 200){
-                  this.buscarClient()
+                  this.fetchClientes()
               }
           },
     },

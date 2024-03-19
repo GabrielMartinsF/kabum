@@ -1,6 +1,6 @@
 <template>
     <q-dialog
-      ref="addressDialog"
+      ref="addressEditDialog"
       style="backdrop-filter: blur(4px) "
     >
         <q-card class="full-width">
@@ -52,7 +52,7 @@
                         <div class="row full-width">
                             <div class="row full-width">
                                 <q-input
-                                    class="col q-pr-sm p-pl-sm q-pb-md q-pt-md full-width" @change="loadCepHandler()"
+                                    class="col q-pr-sm p-pl-sm q-pb-md q-pt-md full-width" @change="loadCepHandler(payload.endereco.logradouro_cep)"
                                     filled v-model="payload.endereco.logradouro_cep" label="CEP *" mask="#####-###"
                                     lazy-rules :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
                                 />
@@ -109,7 +109,9 @@
   
   <script>
 import { geral } from 'src/mixins';
-
+import { loadCep } from 'src/utils';
+import NotifyService from 'src/services/NotifyService';
+import ClientService from "src/services/ClientService";
   
 export default {
     name: 'DialogClient',
@@ -120,12 +122,26 @@ export default {
       }
     },
     methods: {
-      show () {
-        this.$refs.addressDialog.show();
-      },
-      hide () {
-        this.$refs.addressDialog.hide();
-      },
+        show () {
+            this.$refs.addressEditDialog.show();
+        },
+        hide () {
+            this.$refs.addressEditDialog.hide();
+        },
+
+        async loadCepHandler(value) {
+            try{
+                const result = await loadCep(value)
+                if(result){
+                    this.payload.endereco.logradouro_bairro = result.bairro
+                    this.payload.endereco.logradouro_cidade = result.cidade
+                    this.payload.endereco.logradouro_estado = result.estado
+                    this.payload.endereco.logradouro = result.logradouro
+                }
+            } catch(e) {
+                console.log("loadCep", e, e.response)
+            }
+        },
     }
   }
   </script>

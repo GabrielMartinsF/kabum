@@ -35,7 +35,9 @@ class AddressService
             $rqst = new AddressEntity();
             $rqst->setLogradouro($fields['logradouro']);
             $rqst->setLogradouro_numero($fields['logradouro_numero']);
-            $rqst->setLogradouro_complemento($fields['logradouro_complemento']);
+            if($rqst->getLogradouro_complemento() !== null) {
+                $rqst->setLogradouro_complemento($fields['logradouro_complemento']);
+            }
             $rqst->setLogradouro_bairro($fields['logradouro_bairro']);
             $rqst->setLogradouro_cep($fields['logradouro_cep']);
             $rqst->setlogradouro_cidade($fields['logradouro_cidade']);

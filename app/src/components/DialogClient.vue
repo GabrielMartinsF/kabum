@@ -136,10 +136,7 @@ export default {
                 try {
                     ClientService.adicionar(this.payload)
                     this.loading.confirmar = false
-                    let client = await ClientService.fetch()
-                    if (client.status == 200) {
-                        this.clientes = client.data.data
-                    }
+                    await ClientService.fetch()
                     this.hide()
                 } catch (e) {
                     NotifyService.error("erro aqui")

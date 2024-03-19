@@ -30,6 +30,10 @@ Para executar o frontend, siga estas etapas:
 1. Instale as dependências do Vue.js:
 
     ```sh
+    $ yarn global add @quasar/cli
+    # or
+    $ npm install -g @quasar/cli
+    
     $ cd app && npm install || yarn
     ```
 2. Execute o projeto

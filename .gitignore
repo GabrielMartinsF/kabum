@@ -1,0 +1,11 @@
+api/vendor/autoload.php
+api/vendor/composer/autoload_classmap.php
+api/vendor/composer/autoload_namespaces.php
+api/vendor/composer/autoload_psr4.php
+api/vendor/composer/autoload_real.php
+api/vendor/composer/autoload_static.php
+api/vendor/composer/ClassLoader.php
+api/vendor/composer/installed.json
+api/vendor/composer/installed.php
+api/vendor/composer/InstalledVersions.php
+api/vendor/composer/LICENSE

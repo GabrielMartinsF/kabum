@@ -3,18 +3,24 @@
 namespace App\Models;
 
 use PDO;
+use PDOException;
 
 class Database 
 {
     public static function getConnection()
     {
-        $host = 'localhost';
-        $user = 'root';
-        $pass = 'admin';
-        $base = 'kabum';
+        try{
+            $host = ('localhost');
+            $user = ('root');
+            $pass = ('admin');
+            $bancodb = ('kabum');
+        
+            $conecta = new PDO("mysql:host=$host;dbname=$bancodb", $user, $pass);
 
-        $pdo = new PDO("mysql:host={$host};dbname={$base};charset=UTF8;", $user, $pass);
-
-        return $pdo;
+            return $conecta;
+        } catch(PDOException $e){
+            echo 'Falha ao conectar no banco de dados: '.$e->getMessage();
+            die;
+        }
     }
 }

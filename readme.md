@@ -1,58 +1,51 @@
-### Requisitos
+## Requisitos
 
-```sh
-# Node
-Node.js v20.9.0.
+Para executar este projeto, é necessário ter as seguintes versões instaladas:
 
-# Apache
-Apache Version 2.4.58
+- **Node.js**: v20.9.0
+- **Apache**: Versão 2.4.58
+- **PHP**: Versão 8.0.30
 
-# PHP
-PHP Version 8.0.30
+## Banco de Dados
 
-```
+Para configurar o banco de dados, siga estas etapas:
 
-### Banco
+1. Execute o script de criação localizado em `kabum\bd`.
+2. Acesse o arquivo `api/src/Models/Database.php` e insira suas credenciais de acesso ao banco de dados.
 
-```sh
+## Execução do Backend
 
-# Script para criação em -> kabum\bd
+Para executar o backend, siga estas etapas:
 
-# Acesse o arquivo em -> api/src/Models/Database.php e insira sua credenciais
+1. Instale as dependências do PHP:
 
+    ```sh
+    $ cd api && composer update
+    ```
 
-```
+## Execução do Frontend
 
-### Execução Backend
+Para executar o frontend, siga estas etapas:
 
-```sh
+1. Instale as dependências do Vue.js:
 
-# Install Dependencies - PHP
+    ```sh
+    $ cd app && npm install || yarn
+    ```
+2. Execute o projeto
 
-$ cd api && composer update
+    ```sh 
+    $ yarn dev
+    ```
+    
+## Postman
 
-```
+Para acessar os endpoints da API, utilize a collection disponível em `kabum\postman`. Lembre-se de seguir as instruções de autenticação JWT:
 
-### Execução Frontend:
+1. Crie um usuário.
+2. Faça login para obter o token de acesso.
+3. Insira o token nos cabeçalhos das requisições para autenticação.
 
-```sh
+## Considerações
 
-# Install Dependencies - Vue
-
-$ cd app && npm install || yarn
-
-$ yarn dev
-
-```
-
-### Postman:
-
-```sh
-
-Collection em kabum\postman
-
-```
-
-### Considerações:
-
-O projeto possui autenticação JWT, para ter acesso aos endpoints crie um usuario, faça login, pegue o token que retornará e insira nos cabeçalhos das requisições
+Este projeto inclui autenticação JWT. Certifique-se de seguir as etapas de autenticação descritas acima para acessar os endpoints da API.

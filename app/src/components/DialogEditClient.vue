@@ -55,8 +55,8 @@
             </q-card-section>
 
             <q-card-actions align="center">
-                <q-btn flat label="Cancelar" color="primary" v-close-popup />
-                <q-btn flat label="Confirmar" color="primary" @click="editClient(id)" :loading="loading.confirmar" />
+                <q-btn flat label="Cancelar" color="blue" v-close-popup />
+                <q-btn flat label="Confirmar" color="blue" @click="editClient(id)" :loading="loading.confirmar" />
             </q-card-actions>
         </q-card>
     </q-dialog>

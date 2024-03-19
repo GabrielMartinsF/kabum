@@ -142,9 +142,9 @@ export default {
               if(success){
                   try {
                       this.loading.confirmar = true
-                      await this.ClientService.adicionar(this.payload)
+                      await ClientService.adicionar(this.payload)
                       this.loading.confirmar = false
-                      await ClientService.fetch()
+                      await this.fetchClientes()
                       this.hide()
                   } catch (e) {
                       Notifier.error(e.response.data.message)
@@ -160,7 +160,7 @@ export default {
                       this.loading.confirmar = true
                       await ClientService.editar(this.payload)
                       this.loading.confirmar = false
-                      await ClientService.fetch()
+                      await this.fetchClientes()
                       this.hide()
                   } catch (e) {
                       Notifier.error(e.response.data.message)
@@ -204,7 +204,7 @@ export default {
                       this.loading.confirmar = true
                       await AddressService.editar(this.payloadAddress)
                       this.loading.confirmar = false
-                      await ClientService.fetch()
+                      await this.fetchClientes()
                       this.hide()
                   } catch (e) {
                       Notifier.error(e.response.data.message)

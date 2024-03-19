@@ -60,48 +60,16 @@
 
 <script>
 import { defineComponent } from "vue";
-import { ref } from "vue";
-import UserService from "src/services/UserService";
+import { geral } from "src/mixins";
 
 export default defineComponent({
+  mixins: [geral],
   name: "Login",
   data: () => ({
-    loading: {
-      login: false
-    },
-    login: ref(''),
-    password: ref(''),
-    isPwd: ref(true),
    
   }),
   methods: {
-    async access() {
-      this.loading.login = true;
-      const payload = {
-        login: this.login,
-        senha: this.password
-      }
-      let login = await UserService.login(payload)
-
-      
-
-      try {
-        const login = await UserService.login(payload)
-        this.loading.login = !this.loading.login
-        localStorage.setItem("token", login.data.jwt)
-        router.push({ name: 'painel'})
-      }
-      catch(err) {
-        console.log(err)
-        this.loading.login = this.loading.login
-      }
-
-      if (login.status == 200) {
-
-        this.$router.push({name: "painel"})
-      }
-      
-    },
+    
   },
   mounted() {
     

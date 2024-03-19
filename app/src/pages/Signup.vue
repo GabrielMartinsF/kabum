@@ -58,40 +58,16 @@
 
 <script>
 import { defineComponent } from "vue";
-import { ref } from "vue";
-import UserService from "src/services/UserService";
+import { geral } from "src/mixins";
 
 export default defineComponent({
+  mixins: [geral],
   name: "Singup",
   data: () => ({
-    loading: {
-      cadastro: ref(false)
-    },
-    login: ref(''),
-    password: ref(''),
-    isPwd: ref(true),
-   
+       
   }),
   methods: {
-    async singup() {
-      this.loading.cadastro = !this.loading.cadastro
-      const payload = {
-        login: this.login,
-        senha: this.password
-      }
-
-      try {
-        await UserService.cadastro(payload)
-        this.loading.cadastro = !this.loading.cadastro
-        router.push({ name: 'profile'})
-      }
-      catch(err) {
-        console.log(err)
-        this.loading.cadastro = false
-      }
-      
-    },
-    
+        
   },
   mounted() {
     

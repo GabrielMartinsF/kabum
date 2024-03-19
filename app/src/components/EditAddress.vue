@@ -108,38 +108,15 @@
   </template>
   
   <script>
-import { ref } from 'vue';
-import { loadCep } from 'src/utils';
-import NotifyService from 'src/services/NotifyService';
-import { documentValidator } from 'src/utils/validators/document';
-import ClientService from 'src/services/ClientService';
+import { geral } from 'src/mixins';
 
   
 export default {
     name: 'EditAddress',
+    mixins: [geral],
     data () {
       return {
-    loading:{
-        confirmar: ref(false)
-    },
-    payload : {
-        nome: '',
-        data_nascimento: '',
-        cpf: '',
-        rg: '',
-        telefone: '',
-        endereco: {
-            logradouro: '',
-            logradouro_numero: '',
-            logradouro_complemento: '',
-            logradouro_bairro: '',
-            logradouro_cep: '',
-            logradouro_cep: '',
-            logradouro_cidade: '',
-            logradouro_estado: '',
-        }
-    }
-        
+            
       }
     },
     methods: {
@@ -149,53 +126,6 @@ export default {
       hide () {
         this.$refs.addressDialog.hide();
       },
-      async addClient(){
-        this.loading.confirmar = !this.loading.confirmar
-        let success = await this.$refs['clientForm'].validate()
-        if(success){
-            try {
-                ClientService.adicionar(this.payload)
-                this.loading.confirmar = !this.loading.confirmar
-            } catch (e) {
-                NotifyService.error("erro aqui")
-                console.log('addClient', e, e.response)
-                this.loading.confirmar = !this.loading.confirmar
-            }
-        }
-      },
-      async loadCepHandler() {
-        try{
-            const result = await loadCep(this.payload.endereco.logradouro_cep)
-            if(result){
-                this.payload.endereco.logradouro_bairro = result.bairro
-                this.payload.endereco.logradouro_cidade = result.cidade
-                this.payload.endereco.logradouro_estado = result.estado
-                this.payload.endereco.logradouro = result.logradouro
-            }
-        } catch(e) {
-            console.log("loadCep", e, e.response)
-        }
-      },
-      documentValidatorHandler(value) {
-        return documentValidator(value)
-      },
-      validaDate(value){
-        const partesData = value.split('/')
-        const data = {
-            dia: partesData[0],
-            mes: partesData[1],
-            ano: partesData[2]
-        }
-
-        const dia = parseInt(data.dia)
-        const mes = parseInt(data.mes)
-
-        if (mes < 1 || mes > 12 || dia < 1 || dia > 31) {
-            return false
-        }
-
-        return true
-      }
     }
   }
   </script>

@@ -86,20 +86,18 @@
 </template>
 
 <script>
-import { date } from "quasar";
 import { defineComponent } from "vue";
-import { ref } from "vue";
-import ClientService from "src/services/ClientService";
 import EditAddress from "src/components/EditAddress.vue";
+import { geral } from "src/mixins";
 
 export default defineComponent({
+  mixins: [geral],
   name: "Painel",
   components: {
     EditAddress
   },
   data: () => ({
-    clientes: ref(null),
-    expand: ref(true)            
+             
   }),
   created() {
     this.buscar()
@@ -108,39 +106,7 @@ export default defineComponent({
 
   },
   methods: {
-    openEditAddress(){
-      this.$refs.editAddress.show()
-    },
-    async buscar() {
-      let client = await ClientService.fetch()
-      if (client.status == 200) {
-        this.clientes = client.data.data
-      }
-    },
-    async deletarClient(id) {
-      let del = await ClientService.deletar(id)
-      if(del.status == 200){
-        console.log(del)
-        this.buscar()
-      }
-    },
-    formatDate(data) {
-      const extracted = date.extractDate(data, 'YYYY-MM-DD')
-      return date.formatDate(extracted, "DD/MM/YYYY")
-    },
-    formatDocument(data) {
-      return data.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-    },
-    formatRg(data) {
-      data=data.replace(/\D/g,"");
-      data=data.replace(/(\d{2})(\d{3})(\d{3})(\d{1})$/,"$1.$2.$3-$4");
-      return data;
-    },
-    formatPhone(data) {
-      data = data.replace(/\D/g,'')
-      data = data.replace(/(\d{2})(\d)/,"($1) $2")
-      return data = data.replace(/(\d)(\d{4})$/,"$1-$2")
-    }
+    
   },
   
 });

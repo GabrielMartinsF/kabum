@@ -16,13 +16,11 @@ PHP Version 8.0.30
 
 ```sh
 
-# Install Dependencies - PHP
-
-$ cd api && composer update
+Script para criação em kabum\bd
 
 ```
 
-### Execução
+### Execução Backend
 
 ```sh
 
@@ -30,14 +28,24 @@ $ cd api && composer update
 
 $ cd api && composer update
 
+```
+
+### Execução Frontend:
+
+```sh
+
 # Install Dependencies - Vue
 
-$ cd app && npm install || yarn 
+$ cd app && npm install || yarn
+
+$ yarn dev
 
 ```
 
-Mova o projeto para dentro do seu servidor Apache ou NGINX:
+### Postman:
 
-* API: http://localhost/kabum/api/
+```sh
 
-Acesse a pasta app e utilize o comando -> yarn dev <-
+Collection em kabum\postman
+
+```

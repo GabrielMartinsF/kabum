@@ -16,8 +16,14 @@ class ClientService {
         })
     }
 
+    editar(payload, id) {
+        return axios.put(apiUrl + `client/${id}/update`, payload, {
+            headers: authHeader()
+        })
+    }
+
     deletar(id) {
-        return axios.delete(apiUrl + `/client/${id}/delete`, {
+        return axios.delete(apiUrl + `client/${id}/delete`, {
             headers: authHeader()
         })
     }    

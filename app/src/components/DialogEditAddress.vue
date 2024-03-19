@@ -101,7 +101,7 @@
 
             <q-card-actions align="center">
                 <q-btn flat label="Cancelar" color="primary" v-close-popup />
-                <q-btn flat label="Confirmar" color="primary" @click="addClient()" :loading="loading.confirmar"/>
+                <q-btn flat label="Confirmar" color="primary" @click="addClient()" :loading="loading.confirmar" />
             </q-card-actions>
         </q-card>
     </q-dialog>
@@ -112,7 +112,7 @@ import { geral } from 'src/mixins';
 
   
 export default {
-    name: 'EditAddress',
+    name: 'DialogClient',
     mixins: [geral],
     data () {
       return {

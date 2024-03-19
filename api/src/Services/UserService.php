@@ -98,8 +98,6 @@ class UserService
                 return ['unauthorized'=> $authorization['error']];
             }
 
-            var_dump($authorization);
-
             $userFromJWT = JWT::verify($authorization);
 
             if (!$userFromJWT) return ['unauthorized'=> "Faça login para acessar."];

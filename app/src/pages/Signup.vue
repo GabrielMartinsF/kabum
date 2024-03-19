@@ -76,7 +76,8 @@ export default defineComponent({
 </script>
 <style scoped>
 .signup{
-  height: 100vh;
+  height: auto;
+  width: 100%;
   background: linear-gradient(45deg, #ffd000, #f8c45c, #faa52f, #ff7b00);
   background-size: 200% 200%;
   animation: colors 15s both infinite;

@@ -87,7 +87,7 @@ class PersistenceDatas extends Database
         $stmt = $pdo->prepare('
             SELECT 		
                 client.id_cliente, client.nome, client.data_nascimento, 
-                client.cpf, client.rg, client.telefone, address.logradouro, address.logradouro_numero, 
+                client.cpf, client.rg, client.telefone, address.id_endereco, address.logradouro, address.logradouro_numero, 
                 address.logradouro_complemento, address.logradouro_bairro, address.logradouro_cep, 
                 address.logradouro_cidade, address.logradouro_estado, address.id_cliente
             FROM tb_cliente as client
@@ -103,6 +103,7 @@ class PersistenceDatas extends Database
         foreach ($stmt as $row) {
 
             $endereco = [
+                'id_endereco'=>$row['id_endereco'],
                 'logradouro' => $row['logradouro'], 
                 'logradouro_numero' => $row['logradouro_numero'],
                 'logradouro_complemento' => $row['logradouro_complemento'], 
@@ -139,7 +140,7 @@ class PersistenceDatas extends Database
         $stmt = $pdo->prepare('
             SELECT 		
                 client.id_cliente, client.nome, client.data_nascimento, 
-                client.cpf, client.rg, client.telefone, address.logradouro, address.logradouro_numero, 
+                client.cpf, client.rg, client.telefone, address.id_endereco, address.logradouro, address.logradouro_numero, 
                 address.logradouro_complemento, address.logradouro_bairro, address.logradouro_cep, 
                 address.logradouro_cidade, address.logradouro_estado, address.id_cliente
             FROM tb_cliente as client
@@ -155,6 +156,7 @@ class PersistenceDatas extends Database
         foreach ($stmt as $row) {
 
             $endereco = [
+                'id_endereco'=>$row['id_endereco'],
                 'logradouro' => $row['logradouro'], 
                 'logradouro_numero' => $row['logradouro_numero'],
                 'logradouro_complemento' => $row['logradouro_complemento'], 
@@ -212,9 +214,9 @@ class PersistenceDatas extends Database
         $query = "DELETE FROM ".$table." WHERE ".$where." = ".$id."";
 
         $sth = $connection->prepare($query);
-
+        
         $sth->execute();
-
+        
         return $sth->rowCount() > 0 ? true : false;
     }
 

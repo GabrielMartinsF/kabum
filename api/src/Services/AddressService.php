@@ -25,7 +25,6 @@ class AddressService
             $fields = Validator::validate([
                 'logradouro' => $data['logradouro'] ?? '',
                 'logradouro_numero' => $data['logradouro_numero'] ?? '',
-                'logradouro_complemento' => $data['logradouro_complemento'] ?? '',
                 'logradouro_bairro' => $data['logradouro_bairro'] ?? '',
                 'logradouro_cep' => $data['logradouro_cep'] ?? '',
                 'logradouro_cidade' => $data['logradouro_cidade'] ?? '',

@@ -1,6 +1,7 @@
 <template>
     <q-page>
-      <EditAddress ref="editAddress"/>
+      <DialogClient ref="dialogClient"/>
+      <DialogAddress ref="dialogAddress"/>
       <div class="painel">
         <div class="row items-center card-item justify-center">
 
@@ -8,7 +9,7 @@
             <div class="q-pa-md q-pt-xl col card-login column items-center justify-center">
               <div class="logo"></div>
               <div class="q-pa-md full-width align-end" >
-                <q-btn outline color="orange" label="Novo Cliente" @click="openEditAddress()"/>
+                <q-btn outline color="orange" label="Novo Cliente" @click="openDialogClient()"/>
               </div>
               <div  class="full-width">
                 <q-card class="background q-mb-lg q-pa-md" v-for="(clients, clientsIndex) in clientes" :key="clientsIndex">
@@ -68,10 +69,13 @@
                             <span style="color: aliceblue;">{{ `CEP ${address.logradouro_cep} - ${address.logradouro_cidade}, ${address.logradouro_estado}` }}</span>
                           </div>
                           <div class="row">
-                            <q-btn class="full-width col" square flat color="white" icon="edit" @click="editAddress(clients.id_cliente)"/>
-                            <q-btn class="full-width col" square flat color="white" icon="delete" @click="deleteAddress(clients.id_cliente)"/>
+                            <q-btn class="full-width col" square flat color="white" icon="edit" @click="editAddress(address.id_endereco)"/>
+                            <q-btn class="full-width col" square flat color="white" icon="delete" @click="deleteAddress(address.id_endereco)"/>
                           </div>
                         </div>
+                      </div>
+                      <div class="address-add column justify-center q-ma-md q-pa-md">
+                        <q-btn color="orange" icon="add" label="Novo Endereço" @click="openDialogAddress(clients)"/>
                       </div>
                     </div>
                   </div>
@@ -87,20 +91,22 @@
 
 <script>
 import { defineComponent } from "vue";
-import EditAddress from "src/components/EditAddress.vue";
+import DialogClient from "src/components/DialogClient.vue";
+import DialogAddress from "src/components/DialogAddress.vue";
 import { geral } from "src/mixins";
 
 export default defineComponent({
   mixins: [geral],
   name: "Painel",
   components: {
-    EditAddress
+    DialogClient,
+    DialogAddress
   },
   data: () => ({
              
   }),
   created() {
-    this.buscar()
+    this.buscarClient()
   },
   computed: {
 
@@ -113,7 +119,8 @@ export default defineComponent({
 </script>
 <style scoped>
 .painel{
-  height: 100vh;
+  height: auto;
+  width: 100%;
   background: linear-gradient(45deg, #ffd000, #f8c45c, #faa52f, #ff7b00);
   background-size: 200% 200%;
   animation: colors 15s both infinite;

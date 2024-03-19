@@ -12,6 +12,9 @@
 				{
 					"name": "LOGIN",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -44,7 +47,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -72,7 +75,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -81,7 +84,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_usuario\" : 11,\r\n    \"senha\" : \"123\"\r\n}",
+							"raw": "{\r\n    \"login\" : \"login\",\r\n    \"senha\" : \"senha\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -109,7 +112,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjMiLCJuYW1lIjoibG9naW4yIn0.7XesFTXqK5YiToJ64EVbYblnKRLYHNpZeWtYtsTNSnc",
 									"type": "string"
 								}
 							]
@@ -117,13 +120,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/users/17/delete",
+							"raw": "{{url}}/users/id/delete",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"17",
+								"id",
 								"delete"
 							]
 						}
@@ -133,11 +136,14 @@
 				{
 					"name": "CREATE",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"login\" : \"login3\",\r\n    \"senha\" : \"senha\"\r\n}",
+							"raw": "{\r\n    \"login\" : \"login\",\r\n    \"senha\" : \"senha\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -170,7 +176,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -198,7 +204,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -206,13 +212,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/client/3/fetch",
+							"raw": "{{url}}/client/id/fetch",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"client",
-								"3",
+								"id",
 								"fetch"
 							]
 						}
@@ -227,7 +233,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -236,7 +242,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\" : \"Teste Pessoa\",\r\n    \"data_nascimento\" : \"2000-09-01\",\r\n    \"rg\" : \"201256411\",\r\n    \"telefone\" : \"(31) 999999999\"\r\n}",
+							"raw": "{\r\n    \"nome\" : \"nome\",\r\n    \"data_nascimento\" : \"data_nascimento\",\r\n    \"cpf\" : \"cpf\",\r\n    \"rg\" : \"rg\",\r\n    \"telefone\" : \"telefone\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -244,13 +250,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/client/1/update",
+							"raw": "{{url}}/client/id/update",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"client",
-								"1",
+								"id",
 								"update"
 							]
 						}
@@ -265,7 +271,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -273,13 +279,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/client/2/delete",
+							"raw": "{{url}}/client/id/delete",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"client",
-								"2",
+								"id",
 								"delete"
 							]
 						}
@@ -294,7 +300,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -303,7 +309,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\" : \"login3\",\r\n    \"data_nascimento\" : \"2000-09-01\",\r\n    \"cpf\" : \"88535996001\",\r\n    \"rg\" : \"201256411\",\r\n    \"telefone\" : \"(31) 999999999\"\r\n}",
+							"raw": "{\r\n    \"nome\" : \"nome\",\r\n    \"data_nascimento\" : \"data_nascimento\",\r\n    \"cpf\" : \"cpf\",\r\n    \"rg\" : \"rg\",\r\n    \"telefone\" : \"telefone\",\r\n    \"endereco\" : {\r\n        \"logradouro\" : \"logradouro\", \r\n        \"logradouro_numero\" : \"logradouro_numero\", \r\n        \"logradouro_complemento\" :  \"logradouro_complemento\", \r\n        \"logradouro_bairro\" : \"logradouro_bairro\", \r\n        \"logradouro_cep\" : \"logradouro_cep\", \r\n        \"logradouro_cidade\" : \"logradouro_cidade\", \r\n        \"logradouro_estado\" : \"logradouro_estado\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -336,7 +342,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -364,7 +370,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -372,13 +378,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/address/2/fetch",
+							"raw": "{{url}}/address/id/fetch",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"address",
-								"2",
+								"id",
 								"fetch"
 							]
 						}
@@ -393,7 +399,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -402,7 +408,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"logradouro\" : \"Rua aaa\", \r\n    \"logradouro_numero\" : \"113\", \r\n    \"logradouro_complemento\" :  \"Casa 1\", \r\n    \"logradouro_bairro\" : \"Brooklyn\", \r\n    \"logradouro_cep\" : \"32672-099\", \r\n    \"logradouro_cidade\" : \"Betim\", \r\n    \"logradouro_estado\" : \"MG\"\r\n}",
+							"raw": "{\r\n    \"logradouro\": \"logradouro\",\r\n    \"logradouro_numero\": \"logradouro_numero\",\r\n    \"logradouro_complemento\": \"logradouro_complemento\",\r\n    \"logradouro_bairro\": \"logradouro_bairro\",\r\n    \"logradouro_cep\": \"logradouro_cep\",\r\n    \"logradouro_cidade\": \"logradouro_cidade\",\r\n    \"logradouro_estado\": \"logradouro_estado\",\r\n    \"id_cliente\": \"id_cliente\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -410,13 +416,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/address/2/update",
+							"raw": "{{url}}/address/id/update",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"address",
-								"2",
+								"id",
 								"update"
 							]
 						}
@@ -431,7 +437,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -439,13 +445,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/address/3/delete",
+							"raw": "{{url}}/address/id/delete",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"address",
-								"3",
+								"id",
 								"delete"
 							]
 						}
@@ -460,7 +466,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c3VhcmlvIjoiMTEiLCJsb2dpbiI6ImxvZ2luIn0.h0VyuDtUqYJhutdlrTy7uptbOlRreiCKsN4kUQ3Zuyg",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -469,7 +475,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"logradouro\" : \"Rua 1\", \r\n    \"logradouro_numero\" : \"110\", \r\n    \"logradouro_complemento\" :  \"Casa 3\", \r\n    \"logradouro_bairro\" : \"Brooklyn\", \r\n    \"logradouro_cep\" : \"32672-099\", \r\n    \"logradouro_cidade\" : \"Betim\", \r\n    \"logradouro_estado\" : \"MG\", \r\n    \"id_usuario\" : 3\r\n}",
+							"raw": "{\r\n    \"logradouro\": \"logradouro\",\r\n    \"logradouro_numero\": \"logradouro_numero\",\r\n    \"logradouro_complemento\": \"logradouro_complemento\",\r\n    \"logradouro_bairro\": \"logradouro_bairro\",\r\n    \"logradouro_cep\": \"logradouro_cep\",\r\n    \"logradouro_cidade\": \"logradouro_cidade\",\r\n    \"logradouro_estado\": \"logradouro_estado\",\r\n    \"id_cliente\": \"id_cliente\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

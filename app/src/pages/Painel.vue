@@ -14,7 +14,7 @@
               <div class="logo"></div>
               <div  class="full-width">
                 <div class="q-pa-md full-width justify-center row">
-                  <q-btn outline color="orange" label="Novo Cliente" @click="openDialogClient()"/>
+                  <q-btn unelevated color="orange" icon="add" label="Novo Cliente" @click="openDialogClient()" />
                 </div>
                 <q-card class="background q-mb-lg q-pa-md" v-for="(clients, clientsIndex) in clientes" :key="clientsIndex">
                   <div class="card-client row col-8 items-center">

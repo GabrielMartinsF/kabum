@@ -10,14 +10,14 @@ class Database
     public static function getConnection()
     {
         try{
-            $host = ('localhost');
-            $user = ('root');
-            $pass = ('admin');
-            $bancodb = ('kabum');
+            $host = 'localhost';
+            $user = 'root';
+            $pass = 'admin';
+            $base = 'kabum';    
         
-            $conecta = new PDO("mysql:host=$host;dbname=$bancodb", $user, $pass);
+            $pdo = new PDO("mysql:host={$host};dbname={$base};charset=UTF8;", $user, $pass);
 
-            return $conecta;
+            return $pdo;
         } catch(PDOException $e){
             echo 'Falha ao conectar no banco de dados: '.$e->getMessage();
             die;

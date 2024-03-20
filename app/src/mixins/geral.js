@@ -14,7 +14,8 @@ export default {
         return {
             loading:{
                 confirmar: ref(false),
-                login: ref(false)
+                login: ref(false),
+                cadastro: ref(false)
             },
             login: ref(''),
             password: ref(''),
@@ -106,9 +107,10 @@ export default {
             try {
               await UserService.cadastro(payload)
               this.loading.cadastro = false
-              router.push({ name: 'login'})
+              this.$router.push("/")
             }
             catch(err) {
+              console.log(err)
               Notifier.error(err.response.data.message)
               this.loading.cadastro = false
             }

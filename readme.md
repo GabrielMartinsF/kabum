@@ -6,6 +6,18 @@ Para executar este projeto, é necessário ter as seguintes versões instaladas:
 - **Apache**: Versão 2.4.58
 - **PHP**: Versão 8.0.30
 
+## PDO
+
+Confira se o PDO do PHP está habilitado em seu php.ini.
+
+```sh
+    # Desabilitado:
+    ;extension=pdo_mysql
+
+    # Habilitado: 
+    extension=pdo_mysql    
+```
+
 ## Banco de Dados
 
 Para configurar o banco de dados, siga estas etapas:
